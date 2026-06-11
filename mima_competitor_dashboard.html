@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미마 경쟁사 동향 대시보드</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  :root {
+    --teal:#1D9E75; --teal-light:#E1F5EE; --teal-dark:#0F6E56; --teal-mid:#9FE1CB;
+    --amber:#BA7517; --amber-light:#FAEEDA;
+    --red:#A32D2D; --red-light:#FCEBEB;
+    --blue:#185FA5; --blue-light:#E6F1FB;
+    --purple:#534AB7; --purple-light:#EEEDFE;
+    --coral:#D85A30; --coral-light:#FAECE7;
+    --gray:#5F5E5A; --gray-light:#F1EFE8; --gray-mid:#D3D1C7;
+    --bg:#F7F6F3; --surface:#FFFFFF;
+    --text-primary:#1A1A18; --text-secondary:#5F5E5A; --text-tertiary:#888780;
+    --border:rgba(0,0,0,0.10); --border-em:rgba(0,0,0,0.18);
+    --r-sm:8px; --r-md:12px; --r-lg:16px;
+    --shadow:0 1px 3px rgba(0,0,0,0.07);
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif; background:var(--bg); color:var(--text-primary); font-size:14px; min-height:100vh; }
+
+  /* TOPBAR */
+  .topbar { background:var(--surface); border-bottom:1px solid var(--border); padding:10px 20px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .logo { width:28px; height:28px; background:var(--teal); border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .logo span { color:#fff; font-size:10px; font-weight:700; }
+  .topbar-label { font-size:12px; color:var(--text-secondary); white-space:nowrap; flex-shrink:0; }
+  .url-input { flex:1; min-width:200px; height:34px; border:1px solid var(--border-em); border-radius:var(--r-sm); padding:0 12px; font-size:12px; color:var(--text-primary); background:var(--bg); outline:none; font-family:monospace; }
+  .url-input:focus { border-color:var(--teal); }
+  .btn-load { height:34px; padding:0 16px; background:var(--teal); color:#fff; border:none; border-radius:var(--r-sm); font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px; white-space:nowrap; transition:background 0.15s; }
+  .btn-load:hover { background:var(--teal-dark); }
+  .btn-load.loading { background:var(--gray); pointer-events:none; }
+
+  /* STATUS */
+  .statusbar { background:var(--surface); border-bottom:1px solid var(--border); padding:6px 20px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .chip { display:inline-flex; align-items:center; gap:5px; font-size:11px; padding:3px 10px; border-radius:20px; font-weight:500; }
+  .chip-gray { background:var(--gray-light); color:var(--gray); }
+  .chip-green { background:var(--teal-light); color:var(--teal-dark); }
+
+  /* FILTERBAR */
+  .filterbar { background:var(--surface); border-bottom:1px solid var(--border); padding:9px 20px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .fl { font-size:11px; color:var(--text-tertiary); white-space:nowrap; }
+  select.fsel { height:30px; padding:0 24px 0 10px; border:1px solid var(--border-em); border-radius:20px; font-size:12px; color:var(--text-primary); background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E") no-repeat right 10px center; appearance:none; outline:none; cursor:pointer; }
+  select.fsel:focus { border-color:var(--teal); }
+  .week-btns { display:flex; gap:4px; flex-wrap:wrap; }
+  .wbtn { height:30px; padding:0 12px; border:1px solid var(--border-em); border-radius:20px; font-size:12px; background:var(--bg); color:var(--text-secondary); cursor:pointer; transition:all 0.12s; white-space:nowrap; }
+  .wbtn:hover { border-color:var(--teal); color:var(--teal); }
+  .wbtn.active { background:var(--teal); color:#fff; border-color:var(--teal); font-weight:600; }
+  .view-btns { margin-left:auto; display:flex; gap:4px; }
+  .vbtn { height:30px; padding:0 12px; border:1px solid var(--border-em); border-radius:20px; font-size:12px; background:var(--bg); color:var(--text-secondary); cursor:pointer; display:flex; align-items:center; gap:5px; transition:all 0.12s; }
+  .vbtn:hover { background:var(--gray-light); }
+  .vbtn.active { background:var(--text-primary); color:#fff; border-color:var(--text-primary); }
+
+  /* MAIN */
+  .main { padding:16px 20px; }
+
+  /* METRIC CARDS */
+  .metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
+  @media(max-width:700px){.metrics{grid-template-columns:repeat(2,1fr);}}
+  .mc { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-md); padding:14px 16px; display:flex; align-items:flex-start; gap:12px; box-shadow:var(--shadow); }
+  .mc-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:18px; }
+  .mc-icon.teal{background:var(--teal-light);color:var(--teal);}
+  .mc-icon.blue{background:var(--blue-light);color:var(--blue);}
+  .mc-icon.red{background:var(--red-light);color:var(--red);}
+  .mc-icon.amber{background:var(--amber-light);color:var(--amber);}
+  .mc-val { font-size:26px; font-weight:700; line-height:1; }
+  .mc-val.teal{color:var(--teal);} .mc-val.blue{color:var(--blue);} .mc-val.red{color:var(--red);} .mc-val.amber{color:var(--amber);}
+  .mc-desc { font-size:11px; color:var(--text-secondary); margin-top:4px; }
+
+  /* SECTION HEADER */
+  .sec-hd { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .sec-title { font-size:12px; font-weight:600; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; }
+  .sec-btn { display:flex; align-items:center; gap:5px; font-size:11px; color:var(--text-tertiary); background:none; border:none; cursor:pointer; padding:4px 8px; border-radius:6px; transition:background 0.12s; }
+  .sec-btn:hover { background:var(--gray-light); color:var(--text-primary); }
+
+  /* FEED */
+  .feed { display:flex; flex-direction:column; gap:2px; }
+  .fi { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-md); padding:13px 16px; transition:box-shadow 0.12s; }
+  .fi:hover { box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+  .fi.price-up  { border-left:3px solid var(--red); }
+  .fi.price-dn  { border-left:3px solid var(--teal); }
+  .fi.new-prod  { border-left:3px solid var(--purple); }
+  .fi.oos       { border-left:3px solid var(--gray); }
+  .fi.highlight { border-left:3px solid var(--amber); }
+  .fi-meta { display:flex; align-items:center; gap:8px; margin-bottom:5px; flex-wrap:wrap; }
+  .fi-date { font-size:11px; color:var(--text-tertiary); font-variant-numeric:tabular-nums; }
+  .fi-cat  { font-size:12px; font-weight:600; color:var(--text-primary); }
+  .bbadge { display:inline-flex; align-items:center; font-size:11px; font-weight:600; padding:2px 9px; border-radius:20px; white-space:nowrap; }
+  .fi-title  { font-size:13px; font-weight:500; color:var(--text-primary); margin-bottom:4px; line-height:1.4; }
+  .fi-detail { display:flex; gap:14px; flex-wrap:wrap; }
+  .fi-kv { font-size:11px; color:var(--text-tertiary); display:flex; align-items:center; gap:4px; }
+  .fi-kv .v  { color:var(--text-secondary); font-weight:500; }
+  .fi-kv .v.up { color:var(--red); }
+  .fi-kv .v.dn { color:var(--teal); }
+  .fi-kv .v.sale { color:var(--teal-dark); }
+
+  /* brand badge colors */
+  .bb-미마     {background:#9FE1CB;color:#085041;}
+  .bb-부가부   {background:#CECBF6;color:#26215C;}
+  .bb-줄즈    {background:#F4C0D1;color:#4B1528;}
+  .bb-쥴즈    {background:#F4C0D1;color:#4B1528;}
+  .bb-잉글레시나{background:#F5C4B3;color:#4A1B0C;}
+  .bb-실버크로스{background:#B5D4F4;color:#042C53;}
+  .bb-스토케   {background:#C0DD97;color:#173404;}
+  .bb-싸이벡스  {background:#FAC775;color:#412402;}
+  .bb-오이스터  {background:#D3D1C7;color:#2C2C2A;}
+  .bb-에그    {background:#F7C1C1;color:#501313;}
+  .bb-와이업   {background:#9FE1CB;color:#04342C;}
+  .bb-누비    {background:#CECBF6;color:#26215C;}
+
+  /* TABLE */
+  .tbl-wrap { overflow-x:auto; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-md); box-shadow:var(--shadow); }
+  table.ptbl { width:100%; border-collapse:collapse; font-size:12px; }
+  table.ptbl thead th { padding:9px 13px; text-align:left; font-size:10px; font-weight:600; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.07em; border-bottom:1px solid var(--border); background:var(--bg); white-space:nowrap; }
+  table.ptbl tbody td { padding:9px 13px; border-bottom:1px solid var(--border); vertical-align:middle; white-space:nowrap; }
+  table.ptbl tbody tr:last-child td { border-bottom:none; }
+  table.ptbl tbody tr.mima-row td { background:#f0fbf7; }
+  table.ptbl tbody tr:hover td { background:var(--gray-light); }
+  table.ptbl tbody tr.mima-row:hover td { background:#e1f5ee; }
+  .cat-sep td { background:var(--bg)!important; padding:6px 13px; font-size:10px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.08em; border-bottom:1px solid var(--border); }
+  .diff-pos{color:var(--coral);font-weight:600;} .diff-neg{color:var(--teal);font-weight:600;}
+  .tag { display:inline-block; font-size:10px; padding:1px 6px; border-radius:6px; margin-left:4px; }
+  .tag-issue{background:var(--amber-light);color:var(--amber);}
+  .tag-sale{background:var(--teal-light);color:var(--teal-dark);}
+  .tag-oos{background:var(--red-light);color:var(--red);}
+  .tag-new{background:var(--purple-light);color:var(--purple);}
+  .tag-live{background:var(--blue-light);color:var(--blue);}
+
+  /* CHART */
+  .chart-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-md); padding:16px; margin-bottom:14px; box-shadow:var(--shadow); }
+  .chart-title { font-size:12px; font-weight:600; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:12px; }
+
+  /* EMPTY / LOADING */
+  .empty { text-align:center; padding:60px 20px; color:var(--text-tertiary); }
+  .empty i { font-size:40px; margin-bottom:12px; display:block; }
+  .empty p { font-size:13px; line-height:1.6; }
+  .empty-btn { margin-top:14px; padding:7px 18px; border-radius:20px; border:1px solid var(--border-em); background:var(--bg); font-size:12px; cursor:pointer; color:var(--text-secondary); }
+
+  ::-webkit-scrollbar{width:6px;height:6px;} ::-webkit-scrollbar-track{background:transparent;} ::-webkit-scrollbar-thumb{background:var(--gray-mid);border-radius:3px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo"><span>미마</span></div>
+  <span class="topbar-label">Apps Script URL</span>
+  <input class="url-input" id="urlInput" type="text" placeholder="https://script.google.com/macros/s/…/exec">
+  <button class="btn-load" id="loadBtn" onclick="loadData()">
+    <i class="ti ti-refresh"></i> 불러오기
+  </button>
+</div>
+
+<div class="statusbar">
+  <span class="chip chip-gray" id="countChip"><i class="ti ti-database" style="font-size:12px"></i> 데이터 없음</span>
+  <span class="chip chip-gray" id="dateChip"><i class="ti ti-calendar" style="font-size:12px"></i> 미연동</span>
+</div>
+
+<div class="filterbar">
+  <span class="fl">품목</span>
+  <select class="fsel" id="filterCat" onchange="applyFilters()">
+    <option value="">전체 품목</option>
+    <option value="디럭스 유모차">디럭스 유모차</option>
+    <option value="절충형 유모차">절충형 유모차</option>
+    <option value="휴대용 유모차 (오토폴딩)">휴대용(오토폴딩)</option>
+    <option value="휴대용 유모차">휴대용 유모차</option>
+  </select>
+  <span class="fl">브랜드</span>
+  <select class="fsel" id="filterBrand" onchange="applyFilters()">
+    <option value="">전체 브랜드</option>
+  </select>
+  <span class="fl">주차</span>
+  <div class="week-btns" id="weekBtns"></div>
+  <div class="view-btns">
+    <button class="vbtn active" id="vbIssue" onclick="setView('issue')"><i class="ti ti-layout-list" style="font-size:13px"></i> 이슈</button>
+    <button class="vbtn" id="vbTable" onclick="setView('table')"><i class="ti ti-table" style="font-size:13px"></i> 테이블</button>
+    <button class="vbtn" id="vbChart" onclick="setView('chart')"><i class="ti ti-chart-bar" style="font-size:13px"></i> 차트</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="metrics">
+    <div class="mc"><div class="mc-icon teal"><i class="ti ti-brand-speedtest"></i></div><div><div class="mc-val teal" id="m-brands">—</div><div class="mc-desc">모니터링 브랜드</div></div></div>
+    <div class="mc"><div class="mc-icon blue"><i class="ti ti-arrows-diff"></i></div><div><div class="mc-val blue" id="m-cheaper">—</div><div class="mc-desc">미마보다 저렴</div></div></div>
+    <div class="mc"><div class="mc-icon red"><i class="ti ti-equal-not"></i></div><div><div class="mc-val red" id="m-pricier">—</div><div class="mc-desc">미마보다 비쌈</div></div></div>
+    <div class="mc"><div class="mc-icon amber"><i class="ti ti-alert-triangle"></i></div><div><div class="mc-val amber" id="m-issues">—</div><div class="mc-desc">이번 기간 이슈</div></div></div>
+  </div>
+  <div id="contentArea">
+    <div class="empty">
+      <i class="ti ti-plug-connected-x"></i>
+      <p>Apps Script URL을 입력하고 <strong>불러오기</strong>를 누르거나<br>샘플 데이터로 미리보기 하세요.</p>
+      <button class="empty-btn" onclick="loadSample()">샘플 데이터 보기</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+let allRows = [], filteredRows = [], currentView = 'issue', currentWeek = [], chartInst = null;
+
+const BRAND_COLORS = {
+  '미마':'#1D9E75','부가부':'#7F77DD','줄즈':'#D4537E','쥴즈':'#D4537E',
+  '잉글레시나':'#D85A30','실버크로스':'#378ADD','스토케':'#639922',
+  '싸이벡스':'#BA7517','오이스터':'#888780','에그':'#E24B4A',
+  '와이업':'#5DCAA5','누비':'#AFA9EC'
+};
+
+// ── SAMPLE DATA (실제 시트 기반) ───────────────────────────
+const SAMPLE = [
+  {date:'2026-06-04',cat:'디럭스 유모차',brand:'미마',product:'자리맥스',price:1290000,sale:1235000,diffVsMima:null,changeWoW:null,channel:'',gift:'캐리콧,컵홀더',issue:''},
+  {date:'2026-06-04',cat:'디럭스 유모차',brand:'부가부',product:'폭스 5',price:2223000,sale:2223000,diffVsMima:933000,changeWoW:null,channel:'',gift:'',issue:''},
+  {date:'2026-06-04',cat:'디럭스 유모차',brand:'줄즈',product:'데이5',price:1480000,sale:1470000,diffVsMima:190000,changeWoW:null,channel:'',gift:'',issue:'네이버 슈퍼적립'},
+  {date:'2026-06-04',cat:'디럭스 유모차',brand:'잉글레시나',product:'앱티카듀오',price:1990000,sale:1990000,diffVsMima:700000,changeWoW:null,channel:'',gift:'풋머프,레인커버,이너시트',issue:''},
+  {date:'2026-06-04',cat:'디럭스 유모차',brand:'실버크로스',product:'리프2',price:1810000,sale:1800000,diffVsMima:520000,changeWoW:null,channel:'',gift:'멀티커버,컵홀더',issue:''},
+  {date:'2026-06-04',cat:'디럭스 유모차',brand:'스토케',product:'익스플로리 엑스',price:1390000,sale:1390000,diffVsMima:100000,changeWoW:null,channel:'',gift:'',issue:'전주 대비 판매가 인상'},
+  {date:'2026-06-11',cat:'디럭스 유모차',brand:'미마',product:'자리맥스',price:1290000,sale:1235000,diffVsMima:null,changeWoW:null,channel:'네이버',gift:'캐리콧,컵홀더',issue:''},
+  {date:'2026-06-11',cat:'디럭스 유모차',brand:'부가부',product:'폭스 5',price:2223000,sale:2223000,diffVsMima:933000,changeWoW:0,channel:'네이버',gift:'',issue:''},
+  {date:'2026-06-11',cat:'디럭스 유모차',brand:'줄즈',product:'데이5',price:1480000,sale:1470000,diffVsMima:190000,changeWoW:0,channel:'네이버',gift:'',issue:'네이버 슈퍼적립'},
+  {date:'2026-06-11',cat:'디럭스 유모차',brand:'실버크로스',product:'리프2',price:1810000,sale:1800000,diffVsMima:520000,changeWoW:0,channel:'네이버',gift:'멀티커버,컵홀더',issue:'6/25(목) 11:00 네이버 LIVE'},
+  {date:'2026-06-11',cat:'디럭스 유모차',brand:'스토케',product:'익스플로리 엑스',price:1390000,sale:1390000,diffVsMima:100000,changeWoW:0,channel:'쿠팡',gift:'',issue:''},
+  {date:'2026-06-04',cat:'절충형 유모차',brand:'미마',product:'크레오',price:1230000,sale:1175000,diffVsMima:null,changeWoW:null,channel:'',gift:'컵홀더',issue:''},
+  {date:'2026-06-04',cat:'절충형 유모차',brand:'부가부',product:'드래곤플라이 플러스',price:1567500,sale:1567500,diffVsMima:337500,changeWoW:null,channel:'',gift:'레인커버,컵홀더',issue:'5/27 출시'},
+  {date:'2026-06-04',cat:'절충형 유모차',brand:'줄즈',product:'허브2',price:1200000,sale:1190000,diffVsMima:-30000,changeWoW:null,channel:'',gift:'',issue:''},
+  {date:'2026-06-04',cat:'절충형 유모차',brand:'싸이벡스',product:'미오스 3.0',price:1453000,sale:1453000,diffVsMima:223000,changeWoW:null,channel:'',gift:'컵홀더',issue:'전주 대비 판매가 인하 (2개 이상 구매 시 3% 할인)'},
+  {date:'2026-06-04',cat:'절충형 유모차',brand:'잉글레시나',product:'일렉타',price:1050000,sale:1020000,diffVsMima:-180000,changeWoW:null,channel:'',gift:'풋머프,레인커버,이너시트',issue:''},
+  {date:'2026-06-11',cat:'절충형 유모차',brand:'미마',product:'크레오',price:1230000,sale:1175000,diffVsMima:null,changeWoW:null,channel:'네이버',gift:'컵홀더',issue:''},
+  {date:'2026-06-11',cat:'절충형 유모차',brand:'실버크로스',product:'듄2',price:1490000,sale:1480000,diffVsMima:260000,changeWoW:0,channel:'네이버',gift:'커버, 컵홀더',issue:'6/25(목) 11:00 네이버 LIVE'},
+  {date:'2026-06-04',cat:'휴대용 유모차 (오토폴딩)',brand:'미마',product:'미로',price:759000,sale:716300,diffVsMima:null,changeWoW:null,channel:'',gift:'컵홀더',issue:''},
+  {date:'2026-06-04',cat:'휴대용 유모차 (오토폴딩)',brand:'줄즈',product:'에어2',price:788000,sale:778000,diffVsMima:29000,changeWoW:null,channel:'',gift:'트래블 파우치',issue:'전주 대비 판매가 인상'},
+  {date:'2026-06-04',cat:'휴대용 유모차 (오토폴딩)',brand:'오이스터',product:'미니2',price:670000,sale:670000,diffVsMima:-89000,changeWoW:null,channel:'',gift:'컵홀더, 이너시트, 보관가방',issue:''},
+  {date:'2026-06-11',cat:'휴대용 유모차 (오토폴딩)',brand:'미마',product:'미로',price:810000,sale:722000,diffVsMima:null,changeWoW:null,channel:'네이버',gift:'컵홀더',issue:''},
+  {date:'2026-06-11',cat:'휴대용 유모차 (오토폴딩)',brand:'줄즈',product:'에어2',price:788000,sale:778000,diffVsMima:-22000,changeWoW:0,channel:'네이버',gift:'트래블 파우치',issue:''},
+  {date:'2026-06-04',cat:'휴대용 유모차',brand:'미마',product:'밀리',price:389000,sale:364800,diffVsMima:null,changeWoW:null,channel:'',gift:'안전바, 컵홀더',issue:''},
+  {date:'2026-06-04',cat:'휴대용 유모차',brand:'부가부',product:'버터플라이2',price:902500,sale:902500,diffVsMima:513500,changeWoW:null,channel:'',gift:'',issue:'품절'},
+  {date:'2026-06-04',cat:'휴대용 유모차',brand:'와이업',product:'지니에스3',price:498000,sale:470250,diffVsMima:109000,changeWoW:null,channel:'',gift:'',issue:'6/9 11:00 네이버 LIVE'},
+  {date:'2026-06-04',cat:'휴대용 유모차',brand:'누비',product:'레노2',price:438000,sale:437000,diffVsMima:49000,changeWoW:null,channel:'',gift:'안전바, 헤드쿠션, 보관가방',issue:''},
+  {date:'2026-06-11',cat:'휴대용 유모차',brand:'미마',product:'밀리',price:379000,sale:355300,diffVsMima:null,changeWoW:null,channel:'',gift:'안전바, 컵홀더',issue:''},
+  {date:'2026-06-11',cat:'휴대용 유모차',brand:'부가부',product:'버터플라이2',price:902500,sale:902500,diffVsMima:523500,changeWoW:0,channel:'',gift:'',issue:'품절'},
+  {date:'2026-06-11',cat:'휴대용 유모차',brand:'잉글레시나',product:'퀴드3',price:655000,sale:638000,diffVsMima:276000,changeWoW:0,channel:'CJ온스타일',gift:'컵홀더, 라이너, 모기장',issue:''},
+  {date:'2026-06-11',cat:'휴대용 유모차',brand:'누비',product:'레노2',price:438000,sale:437000,diffVsMima:59000,changeWoW:0,channel:'네이버',gift:'안전바, 헤드쿠션',issue:'복수 구매 3,000원 할인'},
+];
+
+// ── LOAD ──────────────────────────────────────────────────────
+async function loadData() {
+  const url = document.getElementById('urlInput').value.trim();
+  if (!url) { loadSample(); return; }
+  const btn = document.getElementById('loadBtn');
+  btn.classList.add('loading');
+  btn.innerHTML = '<i class="ti ti-refresh" style="animation:spin 0.8s linear infinite"></i> 로딩 중...';
+  try {
+    const res  = await fetch(url);
+    const json = await res.json();
+    const rows = Array.isArray(json) ? json : (json.data || []);
+    if (!rows.length) throw new Error('empty');
+    allRows = rows;
+    initFilters(); applyFilters();
+    setStatus(allRows.length, false);
+  } catch(e) {
+    alert('불러오기 실패. 샘플 데이터로 표시합니다.');
+    loadSample();
+  } finally {
+    btn.classList.remove('loading');
+    btn.innerHTML = '<i class="ti ti-refresh"></i> 불러오기';
+  }
+}
+
+function loadSample() {
+  allRows = SAMPLE;
+  setStatus(allRows.length, true);
+  initFilters(); applyFilters();
+}
+
+function setStatus(n, isSample) {
+  const latest = allRows.reduce((a,b) => a.date > b.date ? a : b, {date:''}).date;
+  document.getElementById('countChip').className = 'chip chip-green';
+  document.getElementById('countChip').innerHTML = `<i class="ti ti-database" style="font-size:12px"></i> ${n}건 로드${isSample?' (샘플)':''}`;
+  document.getElementById('dateChip').className = 'chip chip-green';
+  document.getElementById('dateChip').innerHTML = `<i class="ti ti-calendar" style="font-size:12px"></i> 최신: ${latest}`;
+}
+
+// ── FILTERS ───────────────────────────────────────────────────
+function initFilters() {
+  const brands = [...new Set(allRows.filter(r => r.brand !== '미마').map(r => r.brand))].sort();
+  const bSel = document.getElementById('filterBrand');
+  bSel.innerHTML = '<option value="">전체 브랜드</option>';
+  brands.forEach(b => { const o = document.createElement('option'); o.value = b; o.textContent = b; bSel.appendChild(o); });
+
+  const dates = [...new Set(allRows.map(r => r.date).filter(Boolean))].sort();
+  const container = document.getElementById('weekBtns');
+  container.innerHTML = '';
+  currentWeek = [];
+  dates.forEach(d => {
+    if (container.querySelector(`[data-date="${d}"]`)) return;
+    const btn = document.createElement('button');
+    btn.className = 'wbtn';
+    btn.textContent = d.slice(5);  // MM-DD
+    btn.dataset.date = d;
+    btn.onclick = function() {
+      document.querySelectorAll('.wbtn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      currentWeek = [this.dataset.date];
+      applyFilters();
+    };
+    container.appendChild(btn);
+  });
+  // 최신 주차 자동 선택
+  const btns = container.querySelectorAll('.wbtn');
+  if (btns.length) btns[btns.length - 1].click();
+  else applyFilters();
+}
+
+function applyFilters() {
+  const cat   = document.getElementById('filterCat').value;
+  const brand = document.getElementById('filterBrand').value;
+  filteredRows = allRows.filter(r => {
+    if (cat   && r.cat   !== cat)   return false;
+    if (brand && r.brand !== brand) return false;
+    if (currentWeek.length && !currentWeek.includes(r.date)) return false;
+    return true;
+  });
+  updateMetrics();
+  renderContent();
+}
+
+// ── METRICS ───────────────────────────────────────────────────
+function updateMetrics() {
+  const comp    = filteredRows.filter(r => r.brand !== '미마');
+  const brands  = [...new Set(comp.map(r => r.brand))];
+  const cheaper = comp.filter(r => r.diffVsMima !== null && r.diffVsMima < 0);
+  const pricier = comp.filter(r => r.diffVsMima !== null && r.diffVsMima > 0);
+  const issues  = filteredRows.filter(r => r.issue && r.issue.trim());
+  document.getElementById('m-brands').textContent  = brands.length  + '개';
+  document.getElementById('m-cheaper').textContent = cheaper.length + '건';
+  document.getElementById('m-pricier').textContent = pricier.length + '건';
+  document.getElementById('m-issues').textContent  = issues.length  + '건';
+}
+
+// ── VIEW ──────────────────────────────────────────────────────
+function setView(v) {
+  currentView = v;
+  document.querySelectorAll('.vbtn').forEach(b => b.classList.remove('active'));
+  document.getElementById('vb' + v.charAt(0).toUpperCase() + v.slice(1)).classList.add('active');
+  renderContent();
+}
+
+function renderContent() {
+  if (!filteredRows.length) {
+    document.getElementById('contentArea').innerHTML = `<div class="empty"><i class="ti ti-mood-empty"></i><p>해당 조건의 데이터가 없습니다.</p></div>`;
+    return;
+  }
+  if (currentView === 'issue') renderFeed();
+  else if (currentView === 'table') renderTable();
+  else renderChart();
+}
+
+// ── ISSUE FEED ────────────────────────────────────────────────
+function issueClass(r) {
+  if (r.issue && r.issue.includes('품절')) return 'oos';
+  if (r.issue && (r.issue.includes('출시') || r.issue.includes('신제품'))) return 'new-prod';
+  if (r.changeWoW && r.changeWoW > 0) return 'price-up';
+  if (r.changeWoW && r.changeWoW < 0) return 'price-dn';
+  if (r.issue && r.issue.trim()) return 'highlight';
+  return '';
+}
+
+function renderFeed() {
+  const area = document.getElementById('contentArea');
+  const issueRows = filteredRows.filter(r => r.brand !== '미마' && (
+    (r.issue && r.issue.trim()) || (r.changeWoW !== null && r.changeWoW !== 0)
+  ));
+
+  if (!issueRows.length) {
+    area.innerHTML = `<div class="empty"><i class="ti ti-circle-check"></i><p>이번 주차에 이슈가 없습니다.</p><button class="empty-btn" onclick="setView('table')">테이블 보기</button></div>`;
+    return;
+  }
+
+  let html = `<div class="sec-hd"><span class="sec-title">이슈 · 변동 피드 <span style="color:var(--text-tertiary);font-weight:400">(${issueRows.length}건)</span></span>
+    <button class="sec-btn" onclick="setView('table')"><i class="ti ti-table" style="font-size:12px"></i> 전체 테이블</button></div><div class="feed">`;
+
+  issueRows.forEach(r => {
+    const bc  = 'bb-' + r.brand;
+    const cls = issueClass(r);
+    const chgStr = (r.changeWoW !== null && r.changeWoW !== 0)
+      ? `<span style="color:${r.changeWoW>0?'#A32D2D':'#0F6E56'};font-weight:600">${r.changeWoW>0?'▲':'▼'}${Math.abs(r.changeWoW).toLocaleString()}원</span> 전주 대비` : '';
+    const issStr = r.issue ? `<strong>${r.issue}</strong>` : '';
+    const title  = [issStr, chgStr].filter(Boolean).join(' · ');
+    const diffStr = r.diffVsMima !== null
+      ? `미마 대비 <span class="v ${r.diffVsMima>0?'up':'dn'}">${r.diffVsMima>0?'+':''}${r.diffVsMima.toLocaleString()}원</span>` : '';
+    const saleStr = r.sale && r.sale < r.price
+      ? `세일가 <span class="v sale">${r.sale.toLocaleString()}원</span>` : '';
+    const chStr = r.channel ? `채널 <span class="v">${r.channel}</span>` : '';
+
+    html += `<div class="fi ${cls}">
+      <div class="fi-meta">
+        <span class="fi-date">${r.date}</span>
+        <span class="fi-cat">${r.cat}</span>
+        <span class="bbadge ${bc}">${r.brand}</span>
+      </div>
+      <div class="fi-title">${r.product} — ${title || '변동 없음'}</div>
+      <div class="fi-detail">
+        <span class="fi-kv">판매가 <span class="v">${r.price?r.price.toLocaleString()+'원':'—'}</span></span>
+        ${saleStr?`<span class="fi-kv">${saleStr}</span>`:''}
+        ${diffStr?`<span class="fi-kv">${diffStr}</span>`:''}
+        ${chStr?`<span class="fi-kv">${chStr}</span>`:''}
+        ${r.gift&&r.gift!=='-'?`<span class="fi-kv">사은품 <span class="v">${r.gift}</span></span>`:''}
+      </div>
+    </div>`;
+  });
+  area.innerHTML = html + '</div>';
+}
+
+// ── TABLE ─────────────────────────────────────────────────────
+function renderTable() {
+  const area = document.getElementById('contentArea');
+  const cats = [...new Set(filteredRows.map(r => r.cat))];
+  const catFilter = document.getElementById('filterCat').value;
+  let rows = '';
+
+  cats.forEach(cat => {
+    if (!catFilter) rows += `<tr class="cat-sep"><td colspan="9">${cat}</td></tr>`;
+    filteredRows.filter(r => r.cat === cat).forEach(r => {
+      const isMima = r.brand === '미마';
+      const bc = 'bb-' + r.brand;
+      const diffHtml = r.diffVsMima === null ? '—'
+        : `<span class="${r.diffVsMima>0?'diff-pos':'diff-neg'}">${r.diffVsMima>0?'+':''}${r.diffVsMima.toLocaleString()}</span>`;
+      const chgHtml = r.changeWoW === null ? '—'
+        : r.changeWoW === 0 ? '<span style="color:var(--text-tertiary)">—</span>'
+        : `<span style="color:${r.changeWoW>0?'#A32D2D':'#1D9E75'};font-weight:600">${r.changeWoW>0?'▲':'▼'}${Math.abs(r.changeWoW).toLocaleString()}</span>`;
+
+      const tags = [];
+      if (r.sale && r.sale < r.price) tags.push(`<span class="tag tag-sale">세일</span>`);
+      if (r.issue) {
+        if (r.issue.includes('품절')) tags.push(`<span class="tag tag-oos">품절</span>`);
+        else if (r.issue.includes('LIVE')) tags.push(`<span class="tag tag-live">LIVE</span>`);
+        else if (r.issue.includes('출시')) tags.push(`<span class="tag tag-new">신제품</span>`);
+        else tags.push(`<span class="tag tag-issue">${r.issue.slice(0,14)}${r.issue.length>14?'…':''}</span>`);
+      }
+
+      rows += `<tr class="${isMima?'mima-row':''}">
+        <td><span class="bbadge ${bc}" style="font-size:11px;padding:2px 8px">${r.brand}</span></td>
+        <td>${r.product}${tags.join('')}</td>
+        <td style="text-align:right">${r.price?r.price.toLocaleString():'—'}</td>
+        <td style="text-align:right">${r.sale?'<span style="color:var(--teal-dark);font-weight:500">'+r.sale.toLocaleString()+'</span>':'—'}</td>
+        <td style="text-align:right">${diffHtml}</td>
+        <td style="text-align:center">${chgHtml}</td>
+        <td style="color:var(--text-secondary)">${r.channel||'—'}</td>
+        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">${r.gift&&r.gift!=='-'?r.gift:'—'}</td>
+        <td style="font-size:11px;color:var(--text-tertiary)">${r.date}</td>
+      </tr>`;
+    });
+  });
+
+  area.innerHTML = `
+    <div class="sec-hd"><span class="sec-title">전체 가격 현황 <span style="color:var(--text-tertiary);font-weight:400">(${filteredRows.length}건)</span></span></div>
+    <div class="tbl-wrap"><table class="ptbl">
+      <thead><tr>
+        <th>브랜드</th><th>제품명</th><th style="text-align:right">판매가</th><th style="text-align:right">세일가</th>
+        <th style="text-align:right">미마 대비</th><th style="text-align:center">전주대비</th><th>최저가채널</th><th>사은품</th><th>날짜</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>`;
+}
+
+// ── CHART ─────────────────────────────────────────────────────
+function renderChart() {
+  const area = document.getElementById('contentArea');
+  if (chartInst) { chartInst.destroy(); chartInst = null; }
+
+  const brands = [...new Set(filteredRows.filter(r=>r.brand!=='미마').map(r=>r.brand))];
+  const brandAvg = brands.map(b => {
+    const items = filteredRows.filter(r=>r.brand===b&&r.sale);
+    return { brand:b, avg: items.length ? Math.round(items.reduce((s,i)=>s+i.sale,0)/items.length) : 0 };
+  }).sort((a,b)=>b.avg-a.avg);
+
+  const cats = [...new Set(filteredRows.map(r=>r.cat))];
+  const mimaData = cats.map(c => { const r=filteredRows.filter(x=>x.brand==='미마'&&x.cat===c&&x.sale); return r.length?Math.round(r.reduce((s,i)=>s+i.sale,0)/r.length):null; });
+  const compData = cats.map(c => { const r=filteredRows.filter(x=>x.brand!=='미마'&&x.cat===c&&x.sale); return r.length?Math.round(r.reduce((s,i)=>s+i.sale,0)/r.length):null; });
+
+  area.innerHTML = `
+    <div class="chart-card"><div class="chart-title">브랜드별 평균 세일가</div>
+      <div style="position:relative;height:${Math.max(220,brandAvg.length*36+60)}px"><canvas id="c1"></canvas></div></div>
+    <div class="chart-card"><div class="chart-title">카테고리별 미마 vs 경쟁사 평균가</div>
+      <div style="display:flex;gap:12px;font-size:11px;color:var(--text-secondary);margin-bottom:8px">
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#1D9E75;margin-right:4px;vertical-align:middle"></span>미마</span>
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#7F77DD;margin-right:4px;vertical-align:middle"></span>경쟁사 평균</span>
+      </div>
+      <div style="position:relative;height:260px"><canvas id="c2"></canvas></div></div>`;
+
+  setTimeout(() => {
+    const ctx1 = document.getElementById('c1').getContext('2d');
+    chartInst = new Chart(ctx1, { type:'bar', data:{ labels:brandAvg.map(b=>b.brand), datasets:[{ label:'평균 세일가', data:brandAvg.map(b=>b.avg), backgroundColor:brandAvg.map(b=>(BRAND_COLORS[b.brand]||'#888')+'CC'), borderColor:brandAvg.map(b=>BRAND_COLORS[b.brand]||'#888'), borderWidth:1, borderRadius:4 }]}, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.raw.toLocaleString()}원`}}}, scales:{x:{ticks:{callback:v=>(v/10000)+'만',font:{size:11}},grid:{color:'rgba(128,128,128,0.1)'}},y:{ticks:{font:{size:12}},grid:{display:false}}}}});
+    const ctx2 = document.getElementById('c2').getContext('2d');
+    new Chart(ctx2, { type:'bar', data:{ labels:cats.map(c=>c.replace(' 유모차','').replace(' (오토폴딩)','')), datasets:[{label:'미마',data:mimaData,backgroundColor:'#1D9E75CC',borderColor:'#1D9E75',borderWidth:1,borderRadius:4},{label:'경쟁사 평균',data:compData,backgroundColor:'#7F77DDCC',borderColor:'#7F77DD',borderWidth:1,borderRadius:4}]}, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.raw?c.raw.toLocaleString()+'원':'—'}`}}}, scales:{x:{ticks:{font:{size:11}},grid:{display:false}},y:{ticks:{callback:v=>(v/10000)+'만',font:{size:11}},grid:{color:'rgba(128,128,128,0.1)'}}}}});
+  }, 50);
+}
+</script>
+</body>
+</html>
