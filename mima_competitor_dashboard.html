@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0063)file:///C:/Users/IVG/Downloads/mima_competitor_dashboard_5.html -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>미마 경쟁사 동향 대시보드</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="./mima_competitor_dashboard_files/tabler-icons.min.css">
 <style>
   :root {
     --teal:#1D9E75; --teal-light:#E1F5EE; --teal-dark:#0F6E56; --teal-mid:#9FE1CB;
@@ -149,15 +149,13 @@
   <div class="logo"><span>미마</span></div>
   <span style="font-size:13px;font-weight:500;color:var(--text-primary);">미마 경쟁사 동향 대시보드</span>
   <div style="margin-left:auto;">
-    <button class="btn-load" id="loadBtn" onclick="loadData()">
-      <i class="ti ti-refresh"></i> 새로고침
-    </button>
+    <button class="btn-load" id="loadBtn" onclick="loadData()"><i class="ti ti-refresh"></i> 새로고침</button>
   </div>
 </div>
 
 <div class="statusbar">
-  <span class="chip chip-gray" id="countChip"><i class="ti ti-database" style="font-size:12px"></i> 데이터 없음</span>
-  <span class="chip chip-gray" id="dateChip"><i class="ti ti-calendar" style="font-size:12px"></i> 미연동</span>
+  <span class="chip chip-green" id="countChip"><i class="ti ti-database" style="font-size:12px"></i> 31건 로드 (샘플)</span>
+  <span class="chip chip-green" id="dateChip"><i class="ti ti-calendar" style="font-size:12px"></i> 최신: 2026-06-11</span>
 </div>
 
 <div class="filterbar">
@@ -170,36 +168,167 @@
     <option value="휴대용 유모차">휴대용 유모차</option>
   </select>
   <span class="fl">브랜드</span>
-  <select class="fsel" id="filterBrand" onchange="applyFilters()">
-    <option value="">전체 브랜드</option>
-  </select>
+  <select class="fsel" id="filterBrand" onchange="applyFilters()"><option value="">전체 브랜드</option><option value="누비">누비</option><option value="부가부">부가부</option><option value="스토케">스토케</option><option value="실버크로스">실버크로스</option><option value="싸이벡스">싸이벡스</option><option value="오이스터">오이스터</option><option value="와이업">와이업</option><option value="잉글레시나">잉글레시나</option><option value="줄즈">줄즈</option></select>
   <span class="fl">주차</span>
-  <div class="week-btns" id="weekBtns"></div>
+  <div class="week-btns" id="weekBtns"><button class="wbtn" data-date="2026-06-04">06-04</button><button class="wbtn active" data-date="2026-06-11">06-11</button></div>
   <div class="view-btns">
-    <button class="vbtn active" id="vbIssue" onclick="setView('issue')"><i class="ti ti-layout-list" style="font-size:13px"></i> 이슈</button>
-    <button class="vbtn" id="vbTable" onclick="setView('table')"><i class="ti ti-table" style="font-size:13px"></i> 테이블</button>
-    <button class="vbtn" id="vbChart" onclick="setView('chart')"><i class="ti ti-chart-bar" style="font-size:13px"></i> 차트</button>
+    <button class="vbtn active" id="vbTable" onclick="setView(&#39;table&#39;)"><i class="ti ti-table" style="font-size:13px"></i> 테이블</button>
+    <button class="vbtn" id="vbIssue" onclick="setView(&#39;issue&#39;)"><i class="ti ti-layout-list" style="font-size:13px"></i> 이슈</button>
+    <button class="vbtn" id="vbChart" onclick="setView(&#39;chart&#39;)"><i class="ti ti-chart-bar" style="font-size:13px"></i> 차트</button>
   </div>
 </div>
 
 <div class="main">
   <div class="metrics">
-    <div class="mc"><div class="mc-icon teal"><i class="ti ti-brand-speedtest"></i></div><div><div class="mc-val teal" id="m-brands">—</div><div class="mc-desc">모니터링 브랜드</div></div></div>
-    <div class="mc"><div class="mc-icon blue"><i class="ti ti-arrows-diff"></i></div><div><div class="mc-val blue" id="m-cheaper">—</div><div class="mc-desc">미마보다 저렴</div></div></div>
-    <div class="mc"><div class="mc-icon red"><i class="ti ti-equal-not"></i></div><div><div class="mc-val red" id="m-pricier">—</div><div class="mc-desc">미마보다 비쌈</div></div></div>
-    <div class="mc"><div class="mc-icon amber"><i class="ti ti-alert-triangle"></i></div><div><div class="mc-val amber" id="m-issues">—</div><div class="mc-desc">이번 기간 이슈</div></div></div>
+    <div class="mc"><div class="mc-icon teal"><i class="ti ti-brand-speedtest"></i></div><div><div class="mc-val teal" id="m-brands">6개</div><div class="mc-desc">모니터링 브랜드</div></div></div>
+    <div class="mc"><div class="mc-icon blue"><i class="ti ti-arrows-diff"></i></div><div><div class="mc-val blue" id="m-cheaper">1건</div><div class="mc-desc">미마보다 저렴</div></div></div>
+    <div class="mc"><div class="mc-icon red"><i class="ti ti-equal-not"></i></div><div><div class="mc-val red" id="m-pricier">8건</div><div class="mc-desc">미마보다 비쌈</div></div></div>
+    <div class="mc"><div class="mc-icon amber"><i class="ti ti-alert-triangle"></i></div><div><div class="mc-val amber" id="m-issues">5건</div><div class="mc-desc">이번 기간 이슈</div></div></div>
   </div>
   <div id="contentArea">
-    <div class="empty">
-      <i class="ti ti-refresh" style="animation:spin 0.8s linear infinite;font-size:32px"></i>
-      <p style="margin-top:12px">데이터 불러오는 중...</p>
-    </div>
-  </div>
+    <div class="sec-hd"><span class="sec-title">전체 가격 현황 <span style="color:var(--text-tertiary);font-weight:400">(13건)</span></span></div>
+    <div class="tbl-wrap"><table class="ptbl">
+      <thead><tr>
+        <th>브랜드</th><th>제품명</th><th style="text-align:right">판매가</th><th style="text-align:right">세일가</th>
+        <th style="text-align:right">미마 대비</th><th style="text-align:center">전주대비</th><th>최저가채널</th><th>사은품</th><th>날짜</th>
+      </tr></thead>
+      <tbody><tr class="cat-sep"><td colspan="9">디럭스 유모차</td></tr><tr class="mima-row">
+        <td><span class="bbadge bb-미마" style="font-size:11px;padding:2px 8px">미마</span></td>
+        <td>자리맥스<span class="tag tag-sale">세일</span></td>
+        <td style="text-align:right">1,290,000</td>
+        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">1,235,000</span></td>
+        <td style="text-align:right">—</td>
+        <td style="text-align:center">—</td>
+        <td style="color:var(--text-secondary)">네이버</td>
+        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">캐리콧,컵홀더</td>
+        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
+      </tr><tr class="">
+        <td><span class="bbadge bb-부가부" style="font-size:11px;padding:2px 8px">부가부</span></td>
+        <td>폭스 5</td>
+        <td style="text-align:right">2,223,000</td>
+        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">2,223,000</span></td>
+        <td style="text-align:right"><span class="diff-pos">+933,000</span></td>
+        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
+        <td style="color:var(--text-secondary)">네이버</td>
+        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">—</td>
+        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
+      </tr><tr class="">
+        <td><span class="bbadge bb-줄즈" style="font-size:11px;padding:2px 8px">줄즈</span></td>
+        <td>데이5<span class="tag tag-sale">세일</span><span class="tag tag-issue">네이버 슈퍼적립</span></td>
+        <td style="text-align:right">1,480,000</td>
+        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">1,470,000</span></td>
+        <td style="text-align:right"><span class="diff-pos">+190,000</span></td>
+        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
+        <td style="color:var(--text-secondary)">네이버</td>
+        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">—</td>
+        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
+      </tr><tr class="">
+        <td><span class="bbadge bb-실버크로스" style="font-size:11px;padding:2px 8px">실버크로스</span></td>
+        <td>리프2<span class="tag tag-sale">세일</span><span class="tag tag-live">LIVE</span></td>
+        <td style="text-align:right">1,810,000</td>
+        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">1,800,000</span></td>
+        <td style="text-align:right"><span class="diff-pos">+520,000</span></td>
+        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
+        <td style="color:var(--text-secondary)">네이버</td>
+        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">멀티커버,컵홀더</td>
+        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
+      </tr><tr class="">
+        <td><span class="bbadge bb-스토케" style="font-size:11px;padding:2px 8px">스토케</span></td>
+        <td>익스플로리 엑스</td>
+        <td style="text-align:right">1,390,000</td>
+        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">1,390,000</span></td>
+        <td style="text-align:right"><span class="diff-pos">+100,000</span></td>
+        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
+        <td style="color:var(--text-secondary)">쿠팡</td>
+        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">—</td>
+        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
+      </tr><tr class="cat-sep"><td colspan="9">절충형 유모차</td></tr><tr class="mima-row">
+        <td><span class="bbadge bb-미마" style="font-size:11px;padding:2px 8px">미마</span></td>
+        <td>크레오<span class="tag tag-sale">세일</span></td>
+        <td style="text-align:right">1,230,000</td>
+        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">1,175,000</span></td>
+        <td style="text-align:right">—</td>
+        <td style="text-align:center">—</td>
+        <td style="color:var(--text-secondary)">네이버</td>
+        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">컵홀더</td>
+        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
+      </tr><tr class="">
+        <td><span class="bbadge bb-실버크로스" style="font-size:11px;padding:2px 8px">실버크로스</span></td>
+        <td>듄2<span class="tag tag-sale">세일</span><span class="tag tag-live">LIVE</span></td>
+        <td style="text-align:right">1,490,000</td>
+        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">1,480,000</span></td>
+        <td style="text-align:right"><span class="diff-pos">+260,000</span></td>
+        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
+        <td style="color:var(--text-secondary)">네이버</td>
+        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">커버, 컵홀더</td>
+        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
+      </tr><tr class="cat-sep"><td colspan="9">휴대용 유모차 (오토폴딩)</td></tr><tr class="mima-row">
+        <td><span class="bbadge bb-미마" style="font-size:11px;padding:2px 8px">미마</span></td>
+        <td>미로<span class="tag tag-sale">세일</span></td>
+        <td style="text-align:right">810,000</td>
+        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">722,000</span></td>
+        <td style="text-align:right">—</td>
+        <td style="text-align:center">—</td>
+        <td style="color:var(--text-secondary)">네이버</td>
+        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">컵홀더</td>
+        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
+      </tr><tr class="">
+        <td><span class="bbadge bb-줄즈" style="font-size:11px;padding:2px 8px">줄즈</span></td>
+        <td>에어2<span class="tag tag-sale">세일</span></td>
+        <td style="text-align:right">788,000</td>
+        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">778,000</span></td>
+        <td style="text-align:right"><span class="diff-neg">-22,000</span></td>
+        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
+        <td style="color:var(--text-secondary)">네이버</td>
+        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">트래블 파우치</td>
+        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
+      </tr><tr class="cat-sep"><td colspan="9">휴대용 유모차</td></tr><tr class="mima-row">
+        <td><span class="bbadge bb-미마" style="font-size:11px;padding:2px 8px">미마</span></td>
+        <td>밀리<span class="tag tag-sale">세일</span></td>
+        <td style="text-align:right">379,000</td>
+        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">355,300</span></td>
+        <td style="text-align:right">—</td>
+        <td style="text-align:center">—</td>
+        <td style="color:var(--text-secondary)">—</td>
+        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">안전바, 컵홀더</td>
+        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
+      </tr><tr class="">
+        <td><span class="bbadge bb-부가부" style="font-size:11px;padding:2px 8px">부가부</span></td>
+        <td>버터플라이2<span class="tag tag-oos">품절</span></td>
+        <td style="text-align:right">902,500</td>
+        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">902,500</span></td>
+        <td style="text-align:right"><span class="diff-pos">+523,500</span></td>
+        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
+        <td style="color:var(--text-secondary)">—</td>
+        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">—</td>
+        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
+      </tr><tr class="">
+        <td><span class="bbadge bb-잉글레시나" style="font-size:11px;padding:2px 8px">잉글레시나</span></td>
+        <td>퀴드3<span class="tag tag-sale">세일</span></td>
+        <td style="text-align:right">655,000</td>
+        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">638,000</span></td>
+        <td style="text-align:right"><span class="diff-pos">+276,000</span></td>
+        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
+        <td style="color:var(--text-secondary)">CJ온스타일</td>
+        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">컵홀더, 라이너, 모기장</td>
+        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
+      </tr><tr class="">
+        <td><span class="bbadge bb-누비" style="font-size:11px;padding:2px 8px">누비</span></td>
+        <td>레노2<span class="tag tag-sale">세일</span><span class="tag tag-issue">복수 구매 3,000원 할…</span></td>
+        <td style="text-align:right">438,000</td>
+        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">437,000</span></td>
+        <td style="text-align:right"><span class="diff-pos">+59,000</span></td>
+        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
+        <td style="color:var(--text-secondary)">네이버</td>
+        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">안전바, 헤드쿠션</td>
+        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
+      </tr></tbody>
+    </table></div></div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="./mima_competitor_dashboard_files/chart.umd.js.다운로드"></script>
 <script>
-let allRows = [], filteredRows = [], currentView = 'issue', currentWeek = [], chartInst = null;
+let allRows = [], filteredRows = [], currentView = 'table', currentWeek = [], chartInst = null;
 
 const BRAND_COLORS = {
   '미마':'#1D9E75','부가부':'#7F77DD','줄즈':'#D4537E','쥴즈':'#D4537E',
@@ -545,5 +674,6 @@ function renderChart() {
   }, 50);
 }
 </script>
-</body>
-</html>
+
+
+<script id="jsonp-script" src="./mima_competitor_dashboard_files/exec"></script></body></html>
