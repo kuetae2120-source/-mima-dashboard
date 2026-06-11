@@ -246,26 +246,70 @@ const SAMPLE = [
 // ── APPS SCRIPT URL (고정) ────────────────────────────────────
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxaWhiHHA1OGPYwN8UKRao79G46FubkmBdPJqviiAJCBpl6oJIUeWxTQCIGkOJYoKh5vA/exec';
 
-// ── LOAD ──────────────────────────────────────────────────────
-async function loadData() {
+// ── JSONP 방식으로 로드 (CORS 우회) ──────────────────────────
+function loadData() {
   const btn = document.getElementById('loadBtn');
   btn.classList.add('loading');
   btn.innerHTML = '<i class="ti ti-refresh" style="animation:spin 0.8s linear infinite"></i> 로딩 중...';
-  try {
-    const res  = await fetch(APPS_SCRIPT_URL);
-    const json = await res.json();
-    const rows = Array.isArray(json) ? json : (json.data || []);
-    if (!rows.length) throw new Error('empty');
-    allRows = rows;
-    initFilters(); applyFilters();
-    setStatus(allRows.length, false);
-  } catch(e) {
-    console.warn('Apps Script 로드 실패, 샘플 데이터로 표시:', e);
-    loadSample();
-  } finally {
+
+  // 기존 스크립트 태그 제거
+  const old = document.getElementById('jsonp-script');
+  if (old) old.remove();
+
+  // 전역 콜백 등록
+  window.__mimaCallback = function(json) {
+    const old2 = document.getElementById('jsonp-script');
+    if (old2) old2.remove();
     btn.classList.remove('loading');
     btn.innerHTML = '<i class="ti ti-refresh"></i> 새로고침';
-  }
+    try {
+      const rows = Array.isArray(json) ? json : (json.data || []);
+      if (!rows.length) throw new Error('empty');
+      allRows = rows;
+      initFilters(); applyFilters();
+      setStatus(allRows.length, false);
+    } catch(e) {
+      console.warn('데이터 없음, 샘플로 표시:', e);
+      loadSample();
+    }
+  };
+
+  // 타임아웃 — 5초 안에 응답 없으면 샘플로 폴백
+  const timer = setTimeout(() => {
+    btn.classList.remove('loading');
+    btn.innerHTML = '<i class="ti ti-refresh"></i> 새로고침';
+    console.warn('타임아웃, 샘플 데이터로 표시');
+    loadSample();
+  }, 5000);
+
+  window.__mimaCallback = function(json) {
+    clearTimeout(timer);
+    const old2 = document.getElementById('jsonp-script');
+    if (old2) old2.remove();
+    btn.classList.remove('loading');
+    btn.innerHTML = '<i class="ti ti-refresh"></i> 새로고침';
+    try {
+      const rows = Array.isArray(json) ? json : (json.data || []);
+      if (!rows.length) throw new Error('empty');
+      allRows = rows;
+      initFilters(); applyFilters();
+      setStatus(allRows.length, false);
+    } catch(e) {
+      console.warn('데이터 없음, 샘플로 표시:', e);
+      loadSample();
+    }
+  };
+
+  const script = document.createElement('script');
+  script.id = 'jsonp-script';
+  script.src = APPS_SCRIPT_URL + '?callback=__mimaCallback';
+  script.onerror = () => {
+    clearTimeout(timer);
+    btn.classList.remove('loading');
+    btn.innerHTML = '<i class="ti ti-refresh"></i> 새로고침';
+    loadSample();
+  };
+  document.body.appendChild(script);
 }
 
 // 페이지 열리면 자동 로드
