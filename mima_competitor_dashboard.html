@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0063)file:///C:/Users/IVG/Downloads/mima_competitor_dashboard_5.html -->
+<!-- saved from url=(0063)file:///C:/Users/IVG/Downloads/mima_competitor_dashboard_8.html -->
 <html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -129,6 +129,39 @@
   .tag-new{background:var(--purple-light);color:var(--purple);}
   .tag-live{background:var(--blue-light);color:var(--blue);}
 
+  /* CARD VIEW */
+  .cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(360px,1fr)); gap:16px; }
+  @media(max-width:700px){.cards-grid{grid-template-columns:1fr;}}
+  .item-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--shadow); transition:box-shadow 0.2s; }
+  .item-card:hover { box-shadow:0 4px 16px rgba(29,158,117,0.12); }
+  .card-hd { padding:12px 16px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background:var(--bg); }
+  .card-hd-name { font-size:14px; font-weight:700; color:var(--text-primary); }
+  .card-hd-meta { display:flex; align-items:center; gap:6px; }
+  .card-brand-cnt { font-size:11px; color:var(--text-tertiary); background:var(--surface); border:1px solid var(--border); padding:2px 8px; border-radius:20px; }
+  .card-issue-cnt { font-size:11px; color:var(--red); background:var(--red-light); border:1px solid rgba(163,45,45,0.2); padding:2px 8px; border-radius:20px; }
+  .card-col-hd { display:flex; padding:4px 16px 6px; gap:10px; }
+  .card-col-hd span { font-size:10px; color:var(--text-tertiary); }
+  .brand-row { display:flex; align-items:center; padding:9px 16px; border-bottom:0.5px solid rgba(0,0,0,0.06); gap:10px; transition:background 0.1s; }
+  .brand-row:last-child { border-bottom:none; }
+  .brand-row:hover { background:rgba(29,158,117,0.03); }
+  .brand-row.mima-brand { background:#f0fbf7; }
+  .brand-row.mima-brand:hover { background:#e1f5ee; }
+  .br-name { font-size:12px; font-weight:600; width:90px; flex-shrink:0; color:var(--text-primary); }
+  .br-price { flex:1; min-width:0; }
+  .br-price-main { font-size:12px; font-weight:700; color:var(--text-primary); }
+  .br-price-sale { font-size:11px; color:var(--teal); margin-top:1px; }
+  .br-vs { width:72px; flex-shrink:0; text-align:center; }
+  .vs-cheaper { font-size:10px; font-weight:700; padding:2px 6px; border-radius:20px; background:rgba(29,158,117,0.1); color:#0e7a4a; border:1px solid rgba(29,158,117,0.25); display:inline-block; }
+  .vs-pricier { font-size:10px; font-weight:700; padding:2px 6px; border-radius:20px; background:var(--red-light); color:var(--red); border:1px solid rgba(163,45,45,0.2); display:inline-block; }
+  .vs-same { font-size:10px; padding:2px 6px; border-radius:20px; background:var(--gray-light); color:var(--text-tertiary); border:1px solid var(--border); display:inline-block; }
+  .br-change { width:52px; flex-shrink:0; text-align:right; font-size:11px; font-weight:700; }
+  .br-channel { width:60px; flex-shrink:0; }
+  .ch-tag { font-size:10px; color:var(--text-tertiary); background:var(--gray-light); border:1px solid var(--border); padding:1px 5px; border-radius:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:inline-block; max-width:58px; }
+  .card-issues { background:rgba(186,117,23,0.04); border-top:1px dashed rgba(186,117,23,0.25); padding:9px 16px; display:flex; flex-direction:column; gap:4px; }
+  .card-issues-title { font-size:10px; font-weight:700; color:var(--amber); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:2px; }
+  .card-issue-line { font-size:12px; color:var(--text-primary); line-height:1.5; display:flex; gap:5px; }
+  .card-issue-line strong { color:var(--amber); font-weight:700; flex-shrink:0; }
+
   /* CHART */
   .chart-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-md); padding:16px; margin-bottom:14px; box-shadow:var(--shadow); }
   .chart-title { font-size:12px; font-weight:600; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:12px; }
@@ -172,7 +205,8 @@
   <span class="fl">주차</span>
   <div class="week-btns" id="weekBtns"><button class="wbtn" data-date="2026-06-04">06-04</button><button class="wbtn active" data-date="2026-06-11">06-11</button></div>
   <div class="view-btns">
-    <button class="vbtn active" id="vbTable" onclick="setView(&#39;table&#39;)"><i class="ti ti-table" style="font-size:13px"></i> 테이블</button>
+    <button class="vbtn active" id="vbCard" onclick="setView(&#39;card&#39;)"><i class="ti ti-layout-grid" style="font-size:13px"></i> 카드</button>
+    <button class="vbtn" id="vbTable" onclick="setView(&#39;table&#39;)"><i class="ti ti-table" style="font-size:13px"></i> 테이블</button>
     <button class="vbtn" id="vbIssue" onclick="setView(&#39;issue&#39;)"><i class="ti ti-layout-list" style="font-size:13px"></i> 이슈</button>
     <button class="vbtn" id="vbChart" onclick="setView(&#39;chart&#39;)"><i class="ti ti-chart-bar" style="font-size:13px"></i> 차트</button>
   </div>
@@ -186,149 +220,336 @@
     <div class="mc"><div class="mc-icon amber"><i class="ti ti-alert-triangle"></i></div><div><div class="mc-val amber" id="m-issues">5건</div><div class="mc-desc">이번 기간 이슈</div></div></div>
   </div>
   <div id="contentArea">
-    <div class="sec-hd"><span class="sec-title">전체 가격 현황 <span style="color:var(--text-tertiary);font-weight:400">(13건)</span></span></div>
-    <div class="tbl-wrap"><table class="ptbl">
-      <thead><tr>
-        <th>브랜드</th><th>제품명</th><th style="text-align:right">판매가</th><th style="text-align:right">세일가</th>
-        <th style="text-align:right">미마 대비</th><th style="text-align:center">전주대비</th><th>최저가채널</th><th>사은품</th><th>날짜</th>
-      </tr></thead>
-      <tbody><tr class="cat-sep"><td colspan="9">디럭스 유모차</td></tr><tr class="mima-row">
-        <td><span class="bbadge bb-미마" style="font-size:11px;padding:2px 8px">미마</span></td>
-        <td>자리맥스<span class="tag tag-sale">세일</span></td>
-        <td style="text-align:right">1,290,000</td>
-        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">1,235,000</span></td>
-        <td style="text-align:right">—</td>
-        <td style="text-align:center">—</td>
-        <td style="color:var(--text-secondary)">네이버</td>
-        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">캐리콧,컵홀더</td>
-        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
-      </tr><tr class="">
-        <td><span class="bbadge bb-부가부" style="font-size:11px;padding:2px 8px">부가부</span></td>
-        <td>폭스 5</td>
-        <td style="text-align:right">2,223,000</td>
-        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">2,223,000</span></td>
-        <td style="text-align:right"><span class="diff-pos">+933,000</span></td>
-        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
-        <td style="color:var(--text-secondary)">네이버</td>
-        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">—</td>
-        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
-      </tr><tr class="">
-        <td><span class="bbadge bb-줄즈" style="font-size:11px;padding:2px 8px">줄즈</span></td>
-        <td>데이5<span class="tag tag-sale">세일</span><span class="tag tag-issue">네이버 슈퍼적립</span></td>
-        <td style="text-align:right">1,480,000</td>
-        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">1,470,000</span></td>
-        <td style="text-align:right"><span class="diff-pos">+190,000</span></td>
-        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
-        <td style="color:var(--text-secondary)">네이버</td>
-        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">—</td>
-        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
-      </tr><tr class="">
-        <td><span class="bbadge bb-실버크로스" style="font-size:11px;padding:2px 8px">실버크로스</span></td>
-        <td>리프2<span class="tag tag-sale">세일</span><span class="tag tag-live">LIVE</span></td>
-        <td style="text-align:right">1,810,000</td>
-        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">1,800,000</span></td>
-        <td style="text-align:right"><span class="diff-pos">+520,000</span></td>
-        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
-        <td style="color:var(--text-secondary)">네이버</td>
-        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">멀티커버,컵홀더</td>
-        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
-      </tr><tr class="">
-        <td><span class="bbadge bb-스토케" style="font-size:11px;padding:2px 8px">스토케</span></td>
-        <td>익스플로리 엑스</td>
-        <td style="text-align:right">1,390,000</td>
-        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">1,390,000</span></td>
-        <td style="text-align:right"><span class="diff-pos">+100,000</span></td>
-        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
-        <td style="color:var(--text-secondary)">쿠팡</td>
-        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">—</td>
-        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
-      </tr><tr class="cat-sep"><td colspan="9">절충형 유모차</td></tr><tr class="mima-row">
-        <td><span class="bbadge bb-미마" style="font-size:11px;padding:2px 8px">미마</span></td>
-        <td>크레오<span class="tag tag-sale">세일</span></td>
-        <td style="text-align:right">1,230,000</td>
-        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">1,175,000</span></td>
-        <td style="text-align:right">—</td>
-        <td style="text-align:center">—</td>
-        <td style="color:var(--text-secondary)">네이버</td>
-        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">컵홀더</td>
-        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
-      </tr><tr class="">
-        <td><span class="bbadge bb-실버크로스" style="font-size:11px;padding:2px 8px">실버크로스</span></td>
-        <td>듄2<span class="tag tag-sale">세일</span><span class="tag tag-live">LIVE</span></td>
-        <td style="text-align:right">1,490,000</td>
-        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">1,480,000</span></td>
-        <td style="text-align:right"><span class="diff-pos">+260,000</span></td>
-        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
-        <td style="color:var(--text-secondary)">네이버</td>
-        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">커버, 컵홀더</td>
-        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
-      </tr><tr class="cat-sep"><td colspan="9">휴대용 유모차 (오토폴딩)</td></tr><tr class="mima-row">
-        <td><span class="bbadge bb-미마" style="font-size:11px;padding:2px 8px">미마</span></td>
-        <td>미로<span class="tag tag-sale">세일</span></td>
-        <td style="text-align:right">810,000</td>
-        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">722,000</span></td>
-        <td style="text-align:right">—</td>
-        <td style="text-align:center">—</td>
-        <td style="color:var(--text-secondary)">네이버</td>
-        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">컵홀더</td>
-        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
-      </tr><tr class="">
-        <td><span class="bbadge bb-줄즈" style="font-size:11px;padding:2px 8px">줄즈</span></td>
-        <td>에어2<span class="tag tag-sale">세일</span></td>
-        <td style="text-align:right">788,000</td>
-        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">778,000</span></td>
-        <td style="text-align:right"><span class="diff-neg">-22,000</span></td>
-        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
-        <td style="color:var(--text-secondary)">네이버</td>
-        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">트래블 파우치</td>
-        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
-      </tr><tr class="cat-sep"><td colspan="9">휴대용 유모차</td></tr><tr class="mima-row">
-        <td><span class="bbadge bb-미마" style="font-size:11px;padding:2px 8px">미마</span></td>
-        <td>밀리<span class="tag tag-sale">세일</span></td>
-        <td style="text-align:right">379,000</td>
-        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">355,300</span></td>
-        <td style="text-align:right">—</td>
-        <td style="text-align:center">—</td>
-        <td style="color:var(--text-secondary)">—</td>
-        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">안전바, 컵홀더</td>
-        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
-      </tr><tr class="">
-        <td><span class="bbadge bb-부가부" style="font-size:11px;padding:2px 8px">부가부</span></td>
-        <td>버터플라이2<span class="tag tag-oos">품절</span></td>
-        <td style="text-align:right">902,500</td>
-        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">902,500</span></td>
-        <td style="text-align:right"><span class="diff-pos">+523,500</span></td>
-        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
-        <td style="color:var(--text-secondary)">—</td>
-        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">—</td>
-        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
-      </tr><tr class="">
-        <td><span class="bbadge bb-잉글레시나" style="font-size:11px;padding:2px 8px">잉글레시나</span></td>
-        <td>퀴드3<span class="tag tag-sale">세일</span></td>
-        <td style="text-align:right">655,000</td>
-        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">638,000</span></td>
-        <td style="text-align:right"><span class="diff-pos">+276,000</span></td>
-        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
-        <td style="color:var(--text-secondary)">CJ온스타일</td>
-        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">컵홀더, 라이너, 모기장</td>
-        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
-      </tr><tr class="">
-        <td><span class="bbadge bb-누비" style="font-size:11px;padding:2px 8px">누비</span></td>
-        <td>레노2<span class="tag tag-sale">세일</span><span class="tag tag-issue">복수 구매 3,000원 할…</span></td>
-        <td style="text-align:right">438,000</td>
-        <td style="text-align:right"><span style="color:var(--teal-dark);font-weight:500">437,000</span></td>
-        <td style="text-align:right"><span class="diff-pos">+59,000</span></td>
-        <td style="text-align:center"><span style="color:var(--text-tertiary)">—</span></td>
-        <td style="color:var(--text-secondary)">네이버</td>
-        <td style="color:var(--text-secondary);max-width:120px;overflow:hidden;text-overflow:ellipsis">안전바, 헤드쿠션</td>
-        <td style="font-size:11px;color:var(--text-tertiary)">2026-06-11</td>
-      </tr></tbody>
-    </table></div></div>
+    <div class="sec-hd">
+      <span class="sec-title">카테고리별 현황 <span style="color:var(--text-tertiary);font-weight:400">(4개 카테고리)</span><span style="font-size:11px;color:var(--text-tertiary);margin-left:8px">· 해당 주차 데이터 없는 브랜드는 직전 주차 데이터로 표시</span></span>
+      <button class="sec-btn" onclick="setView(&#39;table&#39;)"><i class="ti ti-table" style="font-size:12px"></i> 전체 테이블</button>
+    </div>
+    <div class="cards-grid"><div class="item-card">
+      <div class="card-hd">
+        <div class="card-hd-name">디럭스 유모차</div>
+        <div class="card-hd-meta">
+          <span class="card-brand-cnt">6개 브랜드</span>
+          <span class="card-issue-cnt">⚠ 2</span>
+        </div>
+      </div>
+      <div class="card-col-hd">
+        <span style="width:90px;flex-shrink:0;">브랜드 / 제품명</span>
+        <span style="flex:1">판매가 / 세일가</span>
+        <span style="width:72px;text-align:center;">vs 미마</span>
+        <span style="width:52px;text-align:right;">전주대비</span>
+        <span style="width:60px;">채널</span>
+      </div>
+      <div class="brand-row mima-brand">
+        <div class="br-name" title="미마">
+          <div>미마</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">자리맥스</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">1,290,000원</div>
+          <div class="br-price-sale">세일 1,235,000원</div>
+        </div>
+        <div class="br-vs"><span class="vs-same">미마</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"><span class="ch-tag" title="네이버">네이버</span></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="부가부">
+          <div>부가부</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">폭스 5</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">2,223,000원</div>
+          
+        </div>
+        <div class="br-vs"><span class="vs-pricier">▲ 933,000</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"><span class="ch-tag" title="네이버">네이버</span></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="스토케">
+          <div>스토케</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">익스플로리 엑스</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">1,390,000원</div>
+          
+        </div>
+        <div class="br-vs"><span class="vs-pricier">▲ 100,000</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"><span class="ch-tag" title="쿠팡">쿠팡</span></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="실버크로스">
+          <div>실버크로스</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">리프2</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">1,810,000원</div>
+          <div class="br-price-sale">세일 1,800,000원</div>
+        </div>
+        <div class="br-vs"><span class="vs-pricier">▲ 520,000</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"><span class="ch-tag" title="네이버">네이버</span></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="잉글레시나">
+          <div>잉글레시나</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">앱티카듀오</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">1,990,000원</div>
+          
+        </div>
+        <div class="br-vs"><span class="vs-pricier">▲ 700,000</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="줄즈">
+          <div>줄즈</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">데이5</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">1,480,000원</div>
+          <div class="br-price-sale">세일 1,470,000원</div>
+        </div>
+        <div class="br-vs"><span class="vs-pricier">▲ 190,000</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"><span class="ch-tag" title="네이버">네이버</span></div>
+      </div>
+      
+      <div class="card-issues">
+        <div class="card-issues-title">⚠ 주요 이슈</div>
+        <div class="card-issue-line"><strong>실버크로스</strong> 6/25(목) 11:00 네이버 LIVE</div><div class="card-issue-line"><strong>줄즈</strong> 네이버 슈퍼적립</div>
+      </div>
+    </div><div class="item-card">
+      <div class="card-hd">
+        <div class="card-hd-name">절충형 유모차</div>
+        <div class="card-hd-meta">
+          <span class="card-brand-cnt">6개 브랜드</span>
+          <span class="card-issue-cnt">⚠ 1</span>
+        </div>
+      </div>
+      <div class="card-col-hd">
+        <span style="width:90px;flex-shrink:0;">브랜드 / 제품명</span>
+        <span style="flex:1">판매가 / 세일가</span>
+        <span style="width:72px;text-align:center;">vs 미마</span>
+        <span style="width:52px;text-align:right;">전주대비</span>
+        <span style="width:60px;">채널</span>
+      </div>
+      <div class="brand-row mima-brand">
+        <div class="br-name" title="미마">
+          <div>미마</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">크레오</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">1,230,000원</div>
+          <div class="br-price-sale">세일 1,175,000원</div>
+        </div>
+        <div class="br-vs"><span class="vs-same">미마</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"><span class="ch-tag" title="네이버">네이버</span></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="부가부">
+          <div>부가부</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">드래곤플라이 플러스</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">1,567,500원</div>
+          
+        </div>
+        <div class="br-vs"><span class="vs-pricier">▲ 337,500</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="실버크로스">
+          <div>실버크로스</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">듄2</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">1,490,000원</div>
+          <div class="br-price-sale">세일 1,480,000원</div>
+        </div>
+        <div class="br-vs"><span class="vs-pricier">▲ 260,000</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"><span class="ch-tag" title="네이버">네이버</span></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="싸이벡스">
+          <div>싸이벡스</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">미오스 3.0</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">1,453,000원</div>
+          
+        </div>
+        <div class="br-vs"><span class="vs-pricier">▲ 223,000</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="잉글레시나">
+          <div>잉글레시나</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">일렉타</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">1,050,000원</div>
+          <div class="br-price-sale">세일 1,020,000원</div>
+        </div>
+        <div class="br-vs"><span class="vs-cheaper">▼ 180,000</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="줄즈">
+          <div>줄즈</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">허브2</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">1,200,000원</div>
+          <div class="br-price-sale">세일 1,190,000원</div>
+        </div>
+        <div class="br-vs"><span class="vs-cheaper">▼ 30,000</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"></div>
+      </div>
+      
+      <div class="card-issues">
+        <div class="card-issues-title">⚠ 주요 이슈</div>
+        <div class="card-issue-line"><strong>실버크로스</strong> 6/25(목) 11:00 네이버 LIVE</div>
+      </div>
+    </div><div class="item-card">
+      <div class="card-hd">
+        <div class="card-hd-name">휴대용 유모차 (오토폴딩)</div>
+        <div class="card-hd-meta">
+          <span class="card-brand-cnt">3개 브랜드</span>
+          
+        </div>
+      </div>
+      <div class="card-col-hd">
+        <span style="width:90px;flex-shrink:0;">브랜드 / 제품명</span>
+        <span style="flex:1">판매가 / 세일가</span>
+        <span style="width:72px;text-align:center;">vs 미마</span>
+        <span style="width:52px;text-align:right;">전주대비</span>
+        <span style="width:60px;">채널</span>
+      </div>
+      <div class="brand-row mima-brand">
+        <div class="br-name" title="미마">
+          <div>미마</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">미로</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">810,000원</div>
+          <div class="br-price-sale">세일 722,000원</div>
+        </div>
+        <div class="br-vs"><span class="vs-same">미마</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"><span class="ch-tag" title="네이버">네이버</span></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="오이스터">
+          <div>오이스터</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">미니2</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">670,000원</div>
+          
+        </div>
+        <div class="br-vs"><span class="vs-cheaper">▼ 89,000</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="줄즈">
+          <div>줄즈</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">에어2</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">788,000원</div>
+          <div class="br-price-sale">세일 778,000원</div>
+        </div>
+        <div class="br-vs"><span class="vs-cheaper">▼ 22,000</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"><span class="ch-tag" title="네이버">네이버</span></div>
+      </div>
+      
+    </div><div class="item-card">
+      <div class="card-hd">
+        <div class="card-hd-name">휴대용 유모차</div>
+        <div class="card-hd-meta">
+          <span class="card-brand-cnt">5개 브랜드</span>
+          <span class="card-issue-cnt">⚠ 2</span>
+        </div>
+      </div>
+      <div class="card-col-hd">
+        <span style="width:90px;flex-shrink:0;">브랜드 / 제품명</span>
+        <span style="flex:1">판매가 / 세일가</span>
+        <span style="width:72px;text-align:center;">vs 미마</span>
+        <span style="width:52px;text-align:right;">전주대비</span>
+        <span style="width:60px;">채널</span>
+      </div>
+      <div class="brand-row mima-brand">
+        <div class="br-name" title="미마">
+          <div>미마</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">밀리</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">379,000원</div>
+          <div class="br-price-sale">세일 355,300원</div>
+        </div>
+        <div class="br-vs"><span class="vs-same">미마</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="누비">
+          <div>누비</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">레노2</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">438,000원</div>
+          <div class="br-price-sale">세일 437,000원</div>
+        </div>
+        <div class="br-vs"><span class="vs-pricier">▲ 59,000</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"><span class="ch-tag" title="네이버">네이버</span></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="부가부">
+          <div>부가부</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">버터플라이2</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">902,500원</div>
+          
+        </div>
+        <div class="br-vs"><span class="vs-pricier">▲ 523,500</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="와이업">
+          <div>와이업</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">지니에스3</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">498,000원</div>
+          <div class="br-price-sale">세일 470,250원</div>
+        </div>
+        <div class="br-vs"><span class="vs-pricier">▲ 109,000</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"></div>
+      </div><div class="brand-row ">
+        <div class="br-name" title="잉글레시나">
+          <div>잉글레시나</div>
+          <div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">퀴드3</div>
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">655,000원</div>
+          <div class="br-price-sale">세일 638,000원</div>
+        </div>
+        <div class="br-vs"><span class="vs-pricier">▲ 276,000</span></div>
+        <div class="br-change"><span style="color:var(--text-tertiary)">—</span></div>
+        <div class="br-channel"><span class="ch-tag" title="CJ온스타일">CJ온스타일</span></div>
+      </div>
+      
+      <div class="card-issues">
+        <div class="card-issues-title">⚠ 주요 이슈</div>
+        <div class="card-issue-line"><strong>누비</strong> 복수 구매 3,000원 할인</div><div class="card-issue-line"><strong>부가부</strong> 품절</div>
+      </div>
+    </div></div></div>
 </div>
 
 <script src="./mima_competitor_dashboard_files/chart.umd.js.다운로드"></script>
 <script>
-let allRows = [], filteredRows = [], currentView = 'table', currentWeek = [], chartInst = null;
+let allRows = [], filteredRows = [], currentView = 'card', currentWeek = [], chartInst = null;
 
 const BRAND_COLORS = {
   '미마':'#1D9E75','부가부':'#7F77DD','줄즈':'#D4537E','쥴즈':'#D4537E',
@@ -519,7 +740,8 @@ function updateMetrics() {
 function setView(v) {
   currentView = v;
   document.querySelectorAll('.vbtn').forEach(b => b.classList.remove('active'));
-  document.getElementById('vb' + v.charAt(0).toUpperCase() + v.slice(1)).classList.add('active');
+  const map = {card:'vbCard', table:'vbTable', issue:'vbIssue', chart:'vbChart'};
+  if(map[v]) document.getElementById(map[v]).classList.add('active');
   renderContent();
 }
 
@@ -528,9 +750,135 @@ function renderContent() {
     document.getElementById('contentArea').innerHTML = `<div class="empty"><i class="ti ti-mood-empty"></i><p>해당 조건의 데이터가 없습니다.</p></div>`;
     return;
   }
+  if (currentView === 'card')  renderCards();
   if (currentView === 'issue') renderFeed();
-  else if (currentView === 'table') renderTable();
-  else renderChart();
+  if (currentView === 'table') renderTable();
+  if (currentView === 'chart') renderChart();
+}
+
+// ── CARD VIEW ─────────────────────────────────────────────────
+function renderCards() {
+  const area = document.getElementById('contentArea');
+
+  // 카테고리별 그룹핑 (전체 데이터 기준 — 주차 필터 무시)
+  const catFilter  = document.getElementById('filterCat').value;
+  const brandFilter = document.getElementById('filterBrand').value;
+
+  // 카테고리/브랜드 필터만 적용, 주차는 카드 내에서 별도 처리
+  const baseRows = allRows.filter(r => {
+    if (catFilter   && r.cat   !== catFilter)   return false;
+    if (brandFilter && r.brand !== brandFilter) return false;
+    return true;
+  });
+
+  // 카테고리 목록
+  const cats = [...new Set(baseRows.map(r => r.cat).filter(Boolean))];
+
+  if (!cats.length) {
+    area.innerHTML = `<div class="empty"><i class="ti ti-mood-empty"></i><p>데이터가 없어요</p></div>`;
+    return;
+  }
+
+  // 선택된 주차 (없으면 전체 최신)
+  const selWeek = currentWeek.length ? currentWeek[0] : '';
+
+  const cardsHtml = cats.map(cat => {
+    const catRows = baseRows.filter(r => r.cat === cat);
+
+    // 브랜드 목록 (전체 기준)
+    const allBrands = [...new Set(catRows.map(r => r.brand))];
+
+    // 브랜드별: 선택 주차 데이터 우선, 없으면 가장 최신 데이터 fallback
+    const brandRows = allBrands.map(brand => {
+      const brandData = catRows.filter(r => r.brand === brand);
+      // 선택 주차 데이터
+      const weekData = selWeek ? brandData.filter(r => r.date === selWeek) : [];
+      if (weekData.length) return { ...weekData[0], isFallback: false };
+      // fallback: 가장 최신
+      const sorted = brandData.filter(r => r.date).sort((a,b) => b.date.localeCompare(a.date));
+      if (sorted.length) return { ...sorted[0], isFallback: selWeek ? true : false };
+      return null;
+    }).filter(Boolean).sort((a,b) => {
+      if (a.brand === '미마') return -1;
+      if (b.brand === '미마') return 1;
+      return a.brand.localeCompare(b.brand);
+    });
+
+    // 이슈 (선택 주차 기준, 없으면 전체)
+    const issueSource = selWeek ? catRows.filter(r => r.date === selWeek) : catRows;
+    const issueRows = issueSource.filter(r => r.brand !== '미마' && r.issue && r.issue.trim());
+    const issueCount = issueRows.length;
+
+    const brandHtml = brandRows.map(r => {
+      const isMima = r.brand === '미마';
+      const diffHtml = r.diffVsMima === null
+        ? '<span class="vs-same">미마</span>'
+        : r.diffVsMima < 0
+          ? `<span class="vs-cheaper">▼ ${Math.abs(r.diffVsMima).toLocaleString()}</span>`
+          : r.diffVsMima > 0
+            ? `<span class="vs-pricier">▲ ${r.diffVsMima.toLocaleString()}</span>`
+            : '<span class="vs-same">동일</span>';
+      const chgHtml = r.changeWoW === null || r.changeWoW === undefined
+        ? '<span style="color:var(--text-tertiary)">—</span>'
+        : r.changeWoW === 0
+          ? '<span style="color:var(--text-tertiary)">—</span>'
+          : r.changeWoW > 0
+            ? `<span style="color:var(--red)">▲${r.changeWoW.toLocaleString()}</span>`
+            : `<span style="color:var(--teal)">▼${Math.abs(r.changeWoW).toLocaleString()}</span>`;
+      const fallbackBadge = '';  // 날짜 배지 제거
+      return `<div class="brand-row ${isMima?'mima-brand':''}">
+        <div class="br-name" title="${r.brand}">
+          <div>${r.brand}</div>
+          ${r.product ? `<div style="font-size:10px;color:var(--text-tertiary);font-weight:400;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.product}</div>` : ''}
+        </div>
+        <div class="br-price">
+          <div class="br-price-main">${r.price ? r.price.toLocaleString()+'원' : '—'}</div>
+          ${r.sale && r.sale < r.price ? `<div class="br-price-sale">세일 ${r.sale.toLocaleString()}원</div>` : ''}
+        </div>
+        <div class="br-vs">${diffHtml}</div>
+        <div class="br-change">${chgHtml}</div>
+        <div class="br-channel">${r.channel ? `<span class="ch-tag" title="${r.channel}">${r.channel}</span>` : ''}</div>
+      </div>`;
+    }).join('');
+
+    const issueHtml = issueCount ? `
+      <div class="card-issues">
+        <div class="card-issues-title">⚠ 주요 이슈</div>
+        ${issueRows.sort((a,b)=>a.brand.localeCompare(b.brand)).map(r =>
+          `<div class="card-issue-line"><strong>${r.brand}</strong> ${r.issue}</div>`
+        ).join('')}
+      </div>` : '';
+
+    return `<div class="item-card">
+      <div class="card-hd">
+        <div class="card-hd-name">${cat}</div>
+        <div class="card-hd-meta">
+          <span class="card-brand-cnt">${brandRows.length}개 브랜드</span>
+          ${issueCount ? `<span class="card-issue-cnt">⚠ ${issueCount}</span>` : ''}
+        </div>
+      </div>
+      <div class="card-col-hd">
+        <span style="width:90px;flex-shrink:0;">브랜드 / 제품명</span>
+        <span style="flex:1">판매가 / 세일가</span>
+        <span style="width:72px;text-align:center;">vs 미마</span>
+        <span style="width:52px;text-align:right;">전주대비</span>
+        <span style="width:60px;">채널</span>
+      </div>
+      ${brandHtml}
+      ${issueHtml}
+    </div>`;
+  }).join('');
+
+  const fallbackNote = selWeek
+    ? `<span style="font-size:11px;color:var(--text-tertiary);margin-left:8px">· 해당 주차 데이터 없는 브랜드는 직전 주차 데이터로 표시</span>`
+    : '';
+
+  area.innerHTML = `
+    <div class="sec-hd">
+      <span class="sec-title">카테고리별 현황 <span style="color:var(--text-tertiary);font-weight:400">(${cats.length}개 카테고리)</span>${fallbackNote}</span>
+      <button class="sec-btn" onclick="setView('table')"><i class="ti ti-table" style="font-size:12px"></i> 전체 테이블</button>
+    </div>
+    <div class="cards-grid">${cardsHtml}</div>`;
 }
 
 // ── ISSUE FEED ────────────────────────────────────────────────
