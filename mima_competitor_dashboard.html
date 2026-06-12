@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0064)file:///C:/Users/IVG/Downloads/mima_competitor_dashboard_13.html -->
+<!-- saved from url=(0064)file:///C:/Users/IVG/Downloads/mima_competitor_dashboard_15.html -->
 <html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -644,7 +644,6 @@
     </div></div></div>
 </div>
 
-<script src="./mima_competitor_dashboard_files/chart.umd.min.js.다운로드"></script>
 <script>
 let allRows = [], filteredRows = [], currentView = 'card', currentWeek = [], chartInst = null;
 
@@ -1088,9 +1087,8 @@ function renderTable() {
 // ── CHART ─────────────────────────────────────────────────────
 function renderChart() {
   const area = document.getElementById('contentArea');
-  if (chartInst) { chartInst.destroy(); chartInst = null; }
+  if (chartInst) { chartInst = null; }
 
-  // 카드뷰처럼 카테고리/브랜드 필터만 적용, 주차는 최신 데이터 기준
   const catFilter   = document.getElementById('filterCat').value;
   const brandFilter = document.getElementById('filterBrand').value;
   const selWeek     = currentWeek.length ? currentWeek[0] : '';
@@ -1101,58 +1099,81 @@ function renderChart() {
     return true;
   });
 
-  // 주차 데이터 우선, 없으면 최신
-  const getRows = () => {
-    if (!selWeek) return baseRows;
-    const weekRows = baseRows.filter(r => r.date === selWeek);
-    return weekRows.length ? weekRows : baseRows;
-  };
-  const chartRows = getRows();
+  const chartRows = selWeek ? baseRows.filter(r => r.date === selWeek) : baseRows;
+  const useRows   = chartRows.length ? chartRows : baseRows;
 
-  const brands = [...new Set(chartRows.filter(r=>r.brand!=='미마').map(r=>r.brand))];
+  // 브랜드별 평균 세일가
+  const brands = [...new Set(useRows.filter(r=>r.brand!=='미마').map(r=>r.brand))];
   const brandAvg = brands.map(b => {
-    const items = chartRows.filter(r=>r.brand===b&&r.sale);
+    const items = useRows.filter(r=>r.brand===b&&r.sale);
     return { brand:b, avg: items.length ? Math.round(items.reduce((s,i)=>s+i.sale,0)/items.length) : 0 };
-  }).sort((a,b)=>b.avg-a.avg);
+  }).filter(b=>b.avg>0).sort((a,b)=>b.avg-a.avg);
 
+  // 카테고리별 미마 vs 경쟁사
   const cats = [...new Set(baseRows.map(r=>r.cat))];
-  const mimaData = cats.map(c => {
-    const r = chartRows.filter(x=>x.brand==='미마'&&x.cat===c&&x.sale);
-    return r.length ? Math.round(r.reduce((s,i)=>s+i.sale,0)/r.length) : null;
+  const catData = cats.map(c => {
+    const mimaR = useRows.filter(x=>x.brand==='미마'&&x.cat===c&&x.sale);
+    const compR = useRows.filter(x=>x.brand!=='미마'&&x.cat===c&&x.sale);
+    return {
+      cat: c.replace(' 유모차','').replace(' (오토폴딩)',''),
+      mima: mimaR.length ? Math.round(mimaR.reduce((s,i)=>s+i.sale,0)/mimaR.length) : 0,
+      comp: compR.length ? Math.round(compR.reduce((s,i)=>s+i.sale,0)/compR.length) : 0,
+    };
   });
-  const compData = cats.map(c => {
-    const r = chartRows.filter(x=>x.brand!=='미마'&&x.cat===c&&x.sale);
-    return r.length ? Math.round(r.reduce((s,i)=>s+i.sale,0)/r.length) : null;
-  });
+
+  const maxBrand = Math.max(...brandAvg.map(b=>b.avg), 1);
+  const maxCat   = Math.max(...catData.flatMap(c=>[c.mima,c.comp]), 1);
+
+  const fmt = v => v >= 10000 ? Math.round(v/10000)+'만' : v.toLocaleString();
+
+  // 브랜드 차트 (가로 막대)
+  const brandBars = brandAvg.map(b => {
+    const pct = Math.round((b.avg / maxBrand) * 100);
+    const color = BRAND_COLORS[b.brand] || '#888';
+    return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <div style="width:80px;font-size:12px;font-weight:500;color:var(--text-primary);text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${b.brand}">${b.brand}</div>
+      <div style="flex:1;height:24px;background:var(--bg);border-radius:4px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:${color};border-radius:4px;transition:width 0.4s;display:flex;align-items:center;padding-left:8px">
+          <span style="font-size:11px;color:#fff;font-weight:500;white-space:nowrap">${fmt(b.avg)}원</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // 카테고리 차트 (그룹 막대)
+  const catBars = catData.map(c => {
+    const mimaP = Math.round((c.mima / maxCat) * 160);
+    const compP = Math.round((c.comp / maxCat) * 160);
+    return `<div style="flex:1;min-width:0">
+      <div style="display:flex;gap:3px;align-items:flex-end;height:160px;border-bottom:1px solid var(--border)">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end">
+          <div style="background:#1D9E75;border-radius:3px 3px 0 0;height:${mimaP}px;min-height:${c.mima?4:0}px;position:relative">
+            <span style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;color:#1D9E75;font-weight:500;white-space:nowrap">${c.mima?fmt(c.mima):''}</span>
+          </div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end">
+          <div style="background:#7F77DD;border-radius:3px 3px 0 0;height:${compP}px;min-height:${c.comp?4:0}px;position:relative">
+            <span style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;color:#7F77DD;font-weight:500;white-space:nowrap">${c.comp?fmt(c.comp):''}</span>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--text-secondary);text-align:center;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.cat}</div>
+    </div>`;
+  }).join('');
 
   area.innerHTML = `
-    <div class="chart-card"><div class="chart-title">브랜드별 평균 세일가</div>
-      <div style="position:relative;height:${Math.max(220,brandAvg.length*36+60)}px"><canvas id="c1"></canvas></div></div>
-    <div class="chart-card"><div class="chart-title">카테고리별 미마 vs 경쟁사 평균가</div>
-      <div style="display:flex;gap:12px;font-size:11px;color:var(--text-secondary);margin-bottom:8px">
+    <div class="chart-card">
+      <div class="chart-title">브랜드별 평균 세일가</div>
+      <div style="padding:4px 0">${brandBars || '<div style="color:var(--text-tertiary);font-size:12px;padding:20px 0">데이터 없음</div>'}</div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">카테고리별 미마 vs 경쟁사 평균가</div>
+      <div style="display:flex;gap:12px;font-size:11px;color:var(--text-secondary);margin-bottom:12px">
         <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#1D9E75;margin-right:4px;vertical-align:middle"></span>미마</span>
         <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#7F77DD;margin-right:4px;vertical-align:middle"></span>경쟁사 평균</span>
       </div>
-      <div style="position:relative;height:260px"><canvas id="c2"></canvas></div></div>`;
-
-  setTimeout(() => {
-    try {
-      const ctx1 = document.getElementById('c1').getContext('2d');
-      chartInst = new Chart(ctx1, {
-        type:'bar',
-        data:{ labels:brandAvg.map(b=>b.brand), datasets:[{ label:'평균 세일가', data:brandAvg.map(b=>b.avg), backgroundColor:brandAvg.map(b=>(BRAND_COLORS[b.brand]||'#888')+'CC'), borderColor:brandAvg.map(b=>BRAND_COLORS[b.brand]||'#888'), borderWidth:1, borderRadius:4 }]},
-        options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.raw.toLocaleString()}원`}}}, scales:{x:{ticks:{callback:v=>(v/10000)+'만',font:{size:11}},grid:{color:'rgba(128,128,128,0.1)'}},y:{ticks:{font:{size:12}},grid:{display:false}}}}
-      });
-      const ctx2 = document.getElementById('c2').getContext('2d');
-      new Chart(ctx2, {
-        type:'bar',
-        data:{ labels:cats.map(c=>c.replace(' 유모차','').replace(' (오토폴딩)','')), datasets:[{label:'미마',data:mimaData,backgroundColor:'#1D9E75CC',borderColor:'#1D9E75',borderWidth:1,borderRadius:4},{label:'경쟁사 평균',data:compData,backgroundColor:'#7F77DDCC',borderColor:'#7F77DD',borderWidth:1,borderRadius:4}]},
-        options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.raw?c.raw.toLocaleString()+'원':'—'}`}}}, scales:{x:{ticks:{font:{size:11}},grid:{display:false}},y:{ticks:{callback:v=>(v/10000)+'만',font:{size:11}},grid:{color:'rgba(128,128,128,0.1)'}}}}
-      });
-    } catch(e) {
-      area.innerHTML += `<div style="padding:20px;color:var(--text-tertiary);font-size:12px">차트 로딩 중 오류: ${e.message}</div>`;
-    }
-  }, 100);
+      <div style="display:flex;gap:16px;align-items:flex-end;padding:20px 0 0">${catBars || '<div style="color:var(--text-tertiary);font-size:12px">데이터 없음</div>'}</div>
+    </div>`;
 }
 </script>
 
