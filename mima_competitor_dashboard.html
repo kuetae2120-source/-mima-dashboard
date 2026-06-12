@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0063)file:///C:/Users/IVG/Downloads/mima_competitor_dashboard_6.html -->
+<!-- saved from url=(0063)file:///C:/Users/IVG/Downloads/mima_competitor_dashboard_7.html -->
 <html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -211,6 +211,7 @@
     <button class="vbtn" id="vbTable" onclick="setView(&#39;table&#39;)"><i class="ti ti-table" style="font-size:13px"></i> 테이블</button>
     <button class="vbtn" id="vbIssue" onclick="setView(&#39;issue&#39;)"><i class="ti ti-layout-list" style="font-size:13px"></i> 이슈</button>
     <button class="vbtn" id="vbChart" onclick="setView(&#39;chart&#39;)"><i class="ti ti-chart-bar" style="font-size:13px"></i> 차트</button>
+    <button class="vbtn" id="vbMonthly" onclick="setView(&#39;monthly&#39;)"><i class="ti ti-calendar-stats" style="font-size:13px"></i> 월별</button>
   </div>
 </div>
 
@@ -848,7 +849,7 @@ function updateMetrics() {
 function setView(v) {
   currentView = v;
   document.querySelectorAll('.vbtn').forEach(b => b.classList.remove('active'));
-  const map = {card:'vbCard', table:'vbTable', issue:'vbIssue', chart:'vbChart'};
+  const map = {card:'vbCard', table:'vbTable', issue:'vbIssue', chart:'vbChart', monthly:'vbMonthly'};
   if(map[v]) document.getElementById(map[v]).classList.add('active');
   renderContent();
 }
@@ -858,10 +859,11 @@ function renderContent() {
     document.getElementById('contentArea').innerHTML = `<div class="empty"><i class="ti ti-mood-empty"></i><p>해당 조건의 데이터가 없습니다.</p></div>`;
     return;
   }
-  if (currentView === 'card')  renderCards();
-  if (currentView === 'issue') renderFeed();
-  if (currentView === 'table') renderTable();
-  if (currentView === 'chart') renderChart();
+  if (currentView === 'card')    renderCards();
+  if (currentView === 'issue')   renderFeed();
+  if (currentView === 'table')   renderTable();
+  if (currentView === 'chart')   renderChart();
+  if (currentView === 'monthly') renderMonthly();
 }
 
 // ── CARD VIEW ─────────────────────────────────────────────────
@@ -988,7 +990,223 @@ function renderCards() {
     <div class="cards-grid">${cardsHtml}</div>`;
 }
 
-// ── ISSUE FEED ────────────────────────────────────────────────
+// ── MONTHLY VIEW ──────────────────────────────────────────────
+function renderMonthly() {
+  const area = document.getElementById('contentArea');
+  const catFilter   = document.getElementById('filterCat').value;
+  const brandFilter = document.getElementById('filterBrand').value;
+
+  const baseRows = allRows.filter(r => {
+    if (catFilter   && r.cat   !== catFilter)   return false;
+    if (brandFilter && r.brand !== brandFilter) return false;
+    return true;
+  });
+
+  // 월 목록
+  const months = [...new Set(baseRows.map(r => r.date ? r.date.slice(0,7) : '').filter(Boolean))].sort();
+  if (!months.length) {
+    area.innerHTML = `<div class="empty"><i class="ti ti-mood-empty"></i><p>데이터가 없어요</p></div>`;
+    return;
+  }
+
+  // 현재 선택된 월 (없으면 최신)
+  if (!window._selectedMonth || !months.includes(window._selectedMonth)) {
+    window._selectedMonth = months[months.length - 1];
+  }
+
+  // 월별 통계
+  const monthStats = months.map(m => {
+    const rows = baseRows.filter(r => r.date && r.date.startsWith(m));
+    const dates = [...new Set(rows.map(r => r.date))].sort();
+    const issues = rows.filter(r => r.issue && r.issue.trim()).length;
+    const cheaper = rows.filter(r => r.brand !== '미마' && r.diffVsMima !== null && r.diffVsMima < 0).length;
+    return { month: m, rows, dates, issues, cheaper };
+  });
+
+  // 월 카드 HTML
+  const monthCards = monthStats.map(ms => {
+    const isActive = ms.month === window._selectedMonth;
+    const label = ms.month.slice(5,7) + '월 (' + ms.month.slice(0,4) + ')';
+    return `<div onclick="selectMonth('${ms.month}')" style="
+      background:${isActive ? 'var(--teal)' : 'var(--surface)'};
+      color:${isActive ? '#fff' : 'var(--text-primary)'};
+      border:1.5px solid ${isActive ? 'var(--teal)' : 'var(--border)'};
+      border-radius:var(--r-lg);padding:16px 20px;cursor:pointer;
+      transition:all 0.15s;min-width:160px;flex-shrink:0;">
+      <div style="font-size:16px;font-weight:700;margin-bottom:4px">${label}</div>
+      <div style="font-size:12px;opacity:0.8">${ms.dates.length}주차 · ${ms.rows.length}건</div>
+      <div style="font-size:11px;margin-top:4px;opacity:0.7">이슈 ${ms.issues}건 · 미마보다 저렴 ${ms.cheaper}건</div>
+    </div>`;
+  }).join('');
+
+  // 선택된 월 데이터
+  const selMs = monthStats.find(ms => ms.month === window._selectedMonth);
+  if (!selMs) return;
+
+  // 선택된 주차
+  if (!window._selectedWeek || !selMs.dates.includes(window._selectedWeek)) {
+    window._selectedWeek = selMs.dates[selMs.dates.length - 1];
+  }
+
+  // 주차 탭
+  const weekTabs = selMs.dates.map(d => {
+    const isActive = d === window._selectedWeek;
+    return `<button onclick="selectWeek('${d}')" style="
+      padding:6px 14px;border-radius:20px;font-size:12px;font-weight:${isActive?'600':'400'};
+      background:${isActive?'var(--text-primary)':'var(--bg)'};
+      color:${isActive?'#fff':'var(--text-secondary)'};
+      border:1px solid ${isActive?'var(--text-primary)':'var(--border-em)'};
+      cursor:pointer;transition:all 0.12s;white-space:nowrap;">
+      ${d.slice(5).replace('-','/')}
+    </button>`;
+  }).join('');
+
+  // 선택된 주차 데이터 — 카테고리별 테이블
+  const weekRows = selMs.rows.filter(r => r.date === window._selectedWeek);
+  const cats = [...new Set(selMs.rows.map(r => r.cat))];
+
+  const weekTable = cats.map(cat => {
+    const catRows = weekRows.filter(r => r.cat === cat);
+    if (!catRows.length) return '';
+    const rowsHtml = catRows.map(r => {
+      const isMima = r.brand === '미마';
+      const diffHtml = r.diffVsMima === null ? '—'
+        : `<span style="color:${r.diffVsMima>0?'var(--red)':'var(--teal)'};font-weight:600">${r.diffVsMima>0?'▲':'▼'}${Math.abs(r.diffVsMima).toLocaleString()}</span>`;
+      const chgHtml = r.changeWoW === null || r.changeWoW === undefined ? '—'
+        : r.changeWoW === 0 ? '<span style="color:var(--text-tertiary)">—</span>'
+        : `<span style="color:${r.changeWoW>0?'var(--red)':'var(--teal)'};font-weight:600">${r.changeWoW>0?'▲':'▼'}${Math.abs(r.changeWoW).toLocaleString()}</span>`;
+      return `<tr style="${isMima?'background:#f0fbf7;':''}">
+        <td style="padding:8px 12px;font-size:12px;font-weight:600">${r.brand}</td>
+        <td style="padding:8px 12px;font-size:12px">${r.product||''}</td>
+        <td style="padding:8px 12px;font-size:12px;text-align:right">${r.price?r.price.toLocaleString():'—'}</td>
+        <td style="padding:8px 12px;font-size:12px;text-align:right;color:var(--teal)">${r.sale&&r.sale<r.price?r.sale.toLocaleString():'—'}</td>
+        <td style="padding:8px 12px;font-size:12px;text-align:right">${diffHtml}</td>
+        <td style="padding:8px 12px;font-size:12px;text-align:center">${chgHtml}</td>
+        <td style="padding:8px 12px;font-size:11px;color:var(--text-secondary);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.channel||'—'}</td>
+        <td style="padding:8px 12px;font-size:11px;color:${r.issue?'var(--amber)':'var(--text-tertiary)'}">${r.issue||'—'}</td>
+      </tr>`;
+    }).join('');
+    return `<div style="margin-bottom:16px">
+      <div style="font-size:11px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.07em;padding:6px 12px;background:var(--bg);border-radius:8px 8px 0 0;border:1px solid var(--border);border-bottom:none">${cat}</div>
+      <div style="overflow-x:auto;border:1px solid var(--border);border-radius:0 0 8px 8px">
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead><tr style="background:var(--bg)">
+            <th style="padding:7px 12px;text-align:left;font-size:10px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;border-bottom:1px solid var(--border)">브랜드</th>
+            <th style="padding:7px 12px;text-align:left;font-size:10px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;border-bottom:1px solid var(--border)">제품명</th>
+            <th style="padding:7px 12px;text-align:right;font-size:10px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;border-bottom:1px solid var(--border)">판매가</th>
+            <th style="padding:7px 12px;text-align:right;font-size:10px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;border-bottom:1px solid var(--border)">세일가</th>
+            <th style="padding:7px 12px;text-align:right;font-size:10px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;border-bottom:1px solid var(--border)">vs 미마</th>
+            <th style="padding:7px 12px;text-align:center;font-size:10px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;border-bottom:1px solid var(--border)">전주대비</th>
+            <th style="padding:7px 12px;text-align:left;font-size:10px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;border-bottom:1px solid var(--border)">채널</th>
+            <th style="padding:7px 12px;text-align:left;font-size:10px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;border-bottom:1px solid var(--border)">이슈</th>
+          </tr></thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      </div>
+    </div>`;
+  }).join('');
+
+  // 가격 추이 차트 (월 전체 주차별)
+  const allDates = selMs.dates;
+  const brands = [...new Set(selMs.rows.filter(r=>r.brand!=='미마').map(r=>r.brand))];
+  const brandColors = {
+    '부가부':'#7F77DD','줄즈':'#D4537E','쥴즈':'#D4537E','잉글레시나':'#D85A30',
+    '실버크로스':'#378ADD','스토케':'#639922','싸이벡스':'#BA7517','오이스터':'#888780',
+    '에그':'#E24B4A','와이업':'#5DCAA5','누비':'#AFA9EC'
+  };
+
+  // SVG 라인 차트
+  const chartW = 600; const chartH = 200; const padL = 60; const padR = 20; const padT = 30; const padB = 40;
+  const innerW = chartW - padL - padR;
+  const innerH = chartH - padT - padB;
+
+  // 미마 포함 전체 가격 범위
+  const allPrices = selMs.rows.filter(r=>r.sale).map(r=>r.sale);
+  const minP = Math.min(...allPrices) * 0.95;
+  const maxP = Math.max(...allPrices) * 1.05;
+
+  const xStep = allDates.length > 1 ? innerW / (allDates.length - 1) : innerW;
+  const yScale = v => padT + innerH - ((v - minP) / (maxP - minP)) * innerH;
+  const xScale = i => padL + (allDates.length > 1 ? i * xStep : innerW / 2);
+
+  // 미마 라인
+  const mimaLine = (() => {
+    const pts = allDates.map((d,i) => {
+      const r = selMs.rows.filter(x=>x.brand==='미마'&&x.date===d&&x.sale);
+      if(!r.length) return null;
+      const avg = r.reduce((s,x)=>s+x.sale,0)/r.length;
+      return `${xScale(i)},${yScale(avg)}`;
+    }).filter(Boolean);
+    return pts.length ? `<polyline points="${pts.join(' ')}" fill="none" stroke="#1D9E75" stroke-width="2.5" stroke-dasharray="6,3"/>` : '';
+  })();
+
+  const brandLines = brands.slice(0,6).map(brand => {
+    const color = brandColors[brand] || '#888';
+    const pts = allDates.map((d,i) => {
+      const r = selMs.rows.filter(x=>x.brand===brand&&x.date===d&&x.sale);
+      if(!r.length) return null;
+      const avg = r.reduce((s,x)=>s+x.sale,0)/r.length;
+      return `${xScale(i)},${yScale(avg)}`;
+    }).filter(Boolean);
+    return pts.length ? `<polyline points="${pts.join(' ')}" fill="none" stroke="${color}" stroke-width="1.5" opacity="0.8"/>` : '';
+  }).join('');
+
+  const xLabels = allDates.map((d,i) =>
+    `<text x="${xScale(i)}" y="${chartH - 8}" text-anchor="middle" font-size="10" fill="var(--text-tertiary)">${d.slice(5).replace('-','/')}</text>`
+  ).join('');
+
+  const yLabels = [0,0.25,0.5,0.75,1].map(t => {
+    const v = minP + t * (maxP - minP);
+    const y = padT + innerH - t * innerH;
+    return `<text x="${padL - 6}" y="${y + 4}" text-anchor="end" font-size="9" fill="var(--text-tertiary)">${Math.round(v/10000)}만</text>
+    <line x1="${padL}" y1="${y}" x2="${chartW - padR}" y2="${y}" stroke="rgba(128,128,128,0.1)" stroke-width="1"/>`;
+  }).join('');
+
+  const legendHtml = [
+    `<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--text-secondary)"><span style="display:inline-block;width:16px;height:2px;background:#1D9E75;border-top:2px dashed #1D9E75"></span>미마</span>`,
+    ...brands.slice(0,6).map(b => `<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--text-secondary)"><span style="display:inline-block;width:16px;height:2px;background:${brandColors[b]||'#888'}"></span>${b}</span>`)
+  ].join('');
+
+  area.innerHTML = `
+    <div style="margin-bottom:16px">
+      <div style="font-size:11px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">월 선택</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">${monthCards}</div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;margin-bottom:16px;box-shadow:var(--shadow)">
+      <div style="font-size:12px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px">
+        ${window._selectedMonth.slice(5,7)}월 세일가 주차별 추이
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px">${legendHtml}</div>
+      <div style="overflow-x:auto">
+        <svg viewBox="0 0 ${chartW} ${chartH}" style="width:100%;max-width:${chartW}px;height:auto">
+          ${yLabels}
+          ${mimaLine}
+          ${brandLines}
+          ${xLabels}
+        </svg>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;box-shadow:var(--shadow)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+        <div style="font-size:12px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.07em">주차별 상세</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">${weekTabs}</div>
+      </div>
+      ${weekTable || '<div style="color:var(--text-tertiary);font-size:12px;padding:20px 0">해당 주차 데이터 없음</div>'}
+    </div>`;
+}
+
+function selectMonth(m) {
+  window._selectedMonth = m;
+  window._selectedWeek = null;
+  renderMonthly();
+}
+
+function selectWeek(d) {
+  window._selectedWeek = d;
+  renderMonthly();
+}
 function issueClass(r) {
   if (r.issue && r.issue.includes('품절')) return 'oos';
   if (r.issue && (r.issue.includes('출시') || r.issue.includes('신제품'))) return 'new-prod';
