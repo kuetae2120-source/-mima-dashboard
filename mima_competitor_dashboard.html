@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0061)file:///C:/Users/IVG/Downloads/mima_competitor_dashboard.html -->
+<!-- saved from url=(0063)file:///C:/Users/IVG/Downloads/mima_competitor_dashboard_2.html -->
 <html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -166,7 +166,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
     <div class="header-title">미마 경쟁사 동향 대시보드</div>
   </div>
   <div class="header-right">
-    <span class="sync-badge" id="syncBadge">최신 2026-07-02</span>
+    <span class="sync-badge" id="syncBadge">최신 2026-07-16</span>
     <button class="refresh-btn" id="refreshBtn" onclick="loadData()" style="display: inline-block;">↻ 새로고침</button>
   </div>
 </div>
@@ -176,7 +176,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
   <div class="conn-icon">📊</div>
 </div>
 <div style="padding:0 28px;background:#fff;border-bottom:1px solid var(--border);">
-  <div class="status-row" id="statusRow" style="padding-bottom:8px;"><span class="chip chip-ok">✅ 281건 로드</span><span class="chip chip-info">📅 최신: 2026-07-02</span></div>
+  <div class="status-row" id="statusRow" style="padding-bottom:8px;"><span class="chip chip-ok">✅ 287건 로드</span><span class="chip chip-info">📅 최신: 2026-07-16</span></div>
 </div>
 
 <!-- TOP FILTER -->
@@ -184,12 +184,12 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
   <span class="tf-label">품목</span>
   <select class="tf-select" id="itemFilter" onchange="applyFilters()"><option value="">전체 품목</option><option>디럭스 유모차</option><option>절충형 유모차</option><option>휴대용 유모차</option><option>휴대용 유모차 (오토폴딩)</option></select>
   <span class="tf-label">브랜드</span>
-  <select class="tf-select" id="brandFilter" onchange="applyFilters()"><option value="">전체 브랜드</option><option>누비</option><option>미마</option><option>부가부</option><option>스토케</option><option>실버크로스</option><option>싸이벡스</option><option>에그</option><option>오이스터</option><option>와이업</option><option>잉글레시나</option><option>줄즈</option><option>쥴즈</option><option>포레스타</option></select>
+  <select class="tf-select" id="brandFilter" onchange="applyFilters()"><option value="">전체 브랜드</option><option>누비</option><option>미마</option><option>부가부</option><option>스토케</option><option>실버크로스</option><option>싸이벡스</option><option>에그</option><option>오이스터</option><option>와이업</option><option>잉글레시나</option><option>줄즈</option><option>쥴즈</option><option>포레스타</option><option>피에고</option></select>
   <div class="divider"></div>
   <span class="tf-label">월</span>
   <select class="tf-select" id="monthFilter" onchange="setMonth(this.value)"><option value="2026-05">2026-05</option><option value="2026-06">2026-06</option><option value="2026-07">2026-07</option></select>
   <span class="tf-label">주차</span>
-  <div class="week-chips" id="weekChips"><button class="wc " onclick="setWeek(&#39;2026-07-02&#39;)">2026-07-02</button></div>
+  <div class="week-chips" id="weekChips"><button class="wc " onclick="setWeek(&#39;2026-07-02&#39;)">2026-07-02</button><button class="wc " onclick="setWeek(&#39;2026-07-09&#39;)">2026-07-09</button><button class="wc " onclick="setWeek(&#39;2026-07-16&#39;)">2026-07-16</button></div>
   <div class="divider" style="margin-left:auto;"></div>
   <div class="view-toggle">
     <button class="vt-btn on" id="btnCard" onclick="setView(&#39;card&#39;)">🗂 카드</button>
@@ -294,6 +294,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
           <div class="issue-section-title">⚠️ 주요 이슈</div>
           <div class="issue-line"><strong>잉글레시나</strong> <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(앱티카듀오)</span> 잉글레시나 앱티카듀오 품절</div>
         </div>
+        
       </div><div class="item-card">
         <div class="card-header">
           <div class="card-item-name">절충형 유모차</div>
@@ -395,6 +396,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
           <div class="issue-section-title">⚠️ 주요 이슈</div>
           <div class="issue-line"><strong>포레스타</strong> <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(가디언)</span> 신규 브랜드</div>
         </div>
+        
       </div><div class="item-card">
         <div class="card-header">
           <div class="card-item-name">휴대용 유모차 (오토폴딩)</div>
@@ -461,6 +463,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
           <div class="issue-line"><strong>줄즈</strong> <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(에어2)</span> 줄즈 휴대용 유모차 루프트 런칭
 7/15(수) 네이버 LIVE</div>
         </div>
+        
       </div><div class="item-card">
         <div class="card-header">
           <div class="card-item-name">휴대용 유모차</div>
@@ -553,6 +556,548 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
           <div class="issue-section-title">⚠️ 주요 이슈</div>
           <div class="issue-line"><strong>와이업</strong> <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(지니에스3)</span> 7/3(금) 오전 11시 네이버 LIVE</div>
         </div>
+        
+      </div></div>
+    </div><div style="margin-bottom:32px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div style="width:4px;height:18px;background:#5B53F0;border-radius:2px"></div>
+        <span style="font-size:14px;font-weight:700;color:#1a1a2e">07월 2주차</span>
+        <span style="font-size:11px;color:#888;background:#f0f0f0;padding:2px 8px;border-radius:20px">07/09</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px">
+        <div class="sc"><div class="sc-icon purple">🏷️</div><div><div class="sc-val purple">13개</div><div class="sc-label">모니터링 브랜드</div></div></div>
+        <div class="sc"><div class="sc-icon green">📉</div><div><div class="sc-val green">5건</div><div class="sc-label">미마보다 저렴</div></div></div>
+        <div class="sc"><div class="sc-icon red">📈</div><div><div class="sc-val red">21건</div><div class="sc-label">미마보다 비쌈</div></div></div>
+        <div class="sc"><div class="sc-icon orange">⚠️</div><div><div class="sc-val orange">4건</div><div class="sc-label">이번 주 이슈</div></div></div>
+      </div>
+      <div class="cards-grid"><div class="item-card">
+        <div class="card-header">
+          <div class="card-item-name">디럭스 유모차</div>
+          <div class="card-meta"><span class="brand-count">7개 브랜드</span><span class="issue-count">⚠️ 1</span></div>
+        </div>
+        <div style="padding:6px 0 2px">
+          <div style="display:flex;padding:4px 12px 6px;gap:8px">
+            <span style="font-size:10px;color:var(--text-muted);width:80px;flex-shrink:0">브랜드</span>
+            <span style="font-size:10px;color:var(--text-muted);flex:1">판매가/세일가</span>
+            <span style="font-size:10px;color:var(--text-muted);width:70px;text-align:center">미마 가격대비</span>
+            <span style="font-size:10px;color:var(--text-muted);width:70px;text-align:center">전주대비 증감</span>
+            <span style="font-size:10px;color:var(--text-muted);width:60px">최저가채널</span>
+          </div>
+          <div class="brand-row" style="background:rgba(91,83,240,.05);">
+          <div class="brand-name" title="미마">미마<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">자리맥스</div></div>
+          <div class="price-col">
+            <div class="price-main">750,000원</div>
+            <div class="price-sale">세일 745,000원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span class="ch-down">▼240,000</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="부가부">부가부<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">폭스 5</div></div>
+          <div class="price-col">
+            <div class="price-main">2,223,000원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 1,473,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="스토케">스토케<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">익스플로리 엑스</div></div>
+          <div class="price-col">
+            <div class="price-main">1,327,270원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 577,270</span></div>
+          <div class="change-col"><span class="ch-down">▼62,730</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-coupang">쿠팡</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="실버크로스">실버크로스<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">리프2</div></div>
+          <div class="price-col">
+            <div class="price-main">1,810,000원</div>
+            <div class="price-sale">세일 1,800,000원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 1,060,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="잉글레시나">잉글레시나<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">앱티카듀오</div></div>
+          <div class="price-col">
+            <div class="price-main">1,990,000원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 1,240,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="줄즈">줄즈<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">데이5</div></div>
+          <div class="price-col">
+            <div class="price-main">1,470,000원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 720,000</span></div>
+          <div class="change-col"><span class="ch-down">▼10,000</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="쥴즈">쥴즈<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">지오3 하이엔드</div></div>
+          <div class="price-col">
+            <div class="price-main">1,930,000원</div>
+            <div class="price-sale">세일 1,906,890원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 1,180,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-coupang">쿠팡</span></div>
+        </div>
+        </div>
+        
+        <div class="issue-section">
+          <div class="issue-section-title">⚠️ 주요 이슈</div>
+          <div class="issue-line"><strong>잉글레시나</strong> <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(앱티카듀오)</span> 잉글레시나 앱티카듀오 품절</div>
+        </div>
+        
+      </div><div class="item-card">
+        <div class="card-header">
+          <div class="card-item-name">절충형 유모차</div>
+          <div class="card-meta"><span class="brand-count">9개 브랜드</span><span class="issue-count">⚠️ 1</span></div>
+        </div>
+        <div style="padding:6px 0 2px">
+          <div style="display:flex;padding:4px 12px 6px;gap:8px">
+            <span style="font-size:10px;color:var(--text-muted);width:80px;flex-shrink:0">브랜드</span>
+            <span style="font-size:10px;color:var(--text-muted);flex:1">판매가/세일가</span>
+            <span style="font-size:10px;color:var(--text-muted);width:70px;text-align:center">미마 가격대비</span>
+            <span style="font-size:10px;color:var(--text-muted);width:70px;text-align:center">전주대비 증감</span>
+            <span style="font-size:10px;color:var(--text-muted);width:60px">최저가채널</span>
+          </div>
+          <div class="brand-row" style="background:rgba(91,83,240,.05);">
+          <div class="brand-name" title="미마">미마<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">크레오</div></div>
+          <div class="price-col">
+            <div class="price-main">1,190,000원</div>
+            <div class="price-sale">세일 1,185,000원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="부가부">부가부<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">드래곤플라이 플러스</div></div>
+          <div class="price-col">
+            <div class="price-main">1,567,500원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 377,500</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="실버크로스">실버크로스<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">듄2</div></div>
+          <div class="price-col">
+            <div class="price-main">1,490,000원</div>
+            <div class="price-sale">세일 1,480,000원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 300,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="싸이벡스">싸이벡스<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">미오스 3.0</div></div>
+          <div class="price-col">
+            <div class="price-main">1,453,000원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 263,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="오이스터">오이스터<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">오이스터4</div></div>
+          <div class="price-col">
+            <div class="price-main">1,380,000원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 190,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="잉글레시나">잉글레시나<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">앱티카</div></div>
+          <div class="price-col">
+            <div class="price-main">1,298,000원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 108,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="잉글레시나">잉글레시나<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">일렉타</div></div>
+          <div class="price-col">
+            <div class="price-main">1,050,000원</div>
+            <div class="price-sale">세일 1,020,000원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-cheaper">▼ 140,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-coupang">쿠팡</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="줄즈">줄즈<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">허브2</div></div>
+          <div class="price-col">
+            <div class="price-main">1,200,000원</div>
+            <div class="price-sale">세일 1,190,000원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 10,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="포레스타">포레스타<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">가디언</div></div>
+          <div class="price-col">
+            <div class="price-main">840,000원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-cheaper">▼ 350,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div>
+        </div>
+        
+        <div class="issue-section">
+          <div class="issue-section-title">⚠️ 주요 이슈</div>
+          <div class="issue-line"><strong>포레스타</strong> <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(가디언)</span> 신규 브랜드</div>
+        </div>
+        
+      </div><div class="item-card">
+        <div class="card-header">
+          <div class="card-item-name">휴대용 유모차 (오토폴딩)</div>
+          <div class="card-meta"><span class="brand-count">6개 브랜드</span><span class="issue-count">⚠️ 1</span></div>
+        </div>
+        <div style="padding:6px 0 2px">
+          <div style="display:flex;padding:4px 12px 6px;gap:8px">
+            <span style="font-size:10px;color:var(--text-muted);width:80px;flex-shrink:0">브랜드</span>
+            <span style="font-size:10px;color:var(--text-muted);flex:1">판매가/세일가</span>
+            <span style="font-size:10px;color:var(--text-muted);width:70px;text-align:center">미마 가격대비</span>
+            <span style="font-size:10px;color:var(--text-muted);width:70px;text-align:center">전주대비 증감</span>
+            <span style="font-size:10px;color:var(--text-muted);width:60px">최저가채널</span>
+          </div>
+          <div class="brand-row" style="background:rgba(91,83,240,.05);">
+          <div class="brand-name" title="미마">미마<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">미로</div></div>
+          <div class="price-col">
+            <div class="price-main">759,000원</div>
+            <div class="price-sale">세일 754,000원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="에그">에그<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Z PLUS</div></div>
+          <div class="price-col">
+            <div class="price-main">854,890원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 95,890</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-coupang">쿠팡</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="오이스터">오이스터<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">미니 플러스</div></div>
+          <div class="price-col">
+            <div class="price-main">670,000원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-cheaper">▼ 89,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="오이스터">오이스터<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">미니2</div></div>
+          <div class="price-col">
+            <div class="price-main">670,000원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-cheaper">▼ 89,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="줄즈">줄즈<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">에어2</div></div>
+          <div class="price-col">
+            <div class="price-main">788,000원</div>
+            <div class="price-sale">세일 778,000원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 29,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="피에고">피에고<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">S2</div></div>
+          <div class="price-col">
+            <div class="price-main">294,000원</div>
+            <div class="price-sale">세일 284,000원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-cheaper">▼ 465,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div>
+        </div>
+        
+        <div class="issue-section">
+          <div class="issue-section-title">⚠️ 주요 이슈</div>
+          <div class="issue-line"><strong>줄즈</strong> <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(에어2)</span> 줄즈 휴대용 유모차 루프트 런칭
+7/15(수) 네이버 LIVE</div>
+        </div>
+        
+      </div><div class="item-card">
+        <div class="card-header">
+          <div class="card-item-name">휴대용 유모차</div>
+          <div class="card-meta"><span class="brand-count">8개 브랜드</span><span class="issue-count">⚠️ 1</span></div>
+        </div>
+        <div style="padding:6px 0 2px">
+          <div style="display:flex;padding:4px 12px 6px;gap:8px">
+            <span style="font-size:10px;color:var(--text-muted);width:80px;flex-shrink:0">브랜드</span>
+            <span style="font-size:10px;color:var(--text-muted);flex:1">판매가/세일가</span>
+            <span style="font-size:10px;color:var(--text-muted);width:70px;text-align:center">미마 가격대비</span>
+            <span style="font-size:10px;color:var(--text-muted);width:70px;text-align:center">전주대비 증감</span>
+            <span style="font-size:10px;color:var(--text-muted);width:60px">최저가채널</span>
+          </div>
+          <div class="brand-row" style="">
+          <div class="brand-name" title="누비">누비<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">레노2</div></div>
+          <div class="price-col">
+            <div class="price-main">438,000원</div>
+            <div class="price-sale">세일 415,150원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 79,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="background:rgba(91,83,240,.05);">
+          <div class="brand-name" title="미마">미마<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">밀리</div></div>
+          <div class="price-col">
+            <div class="price-main">359,000원</div>
+            <div class="price-sale">세일 354,000원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span class="ch-down">▼20,000</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="부가부">부가부<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">버터플라이2</div></div>
+          <div class="price-col">
+            <div class="price-main">902,500원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 543,500</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="스토케">스토케<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">요요3</div></div>
+          <div class="price-col">
+            <div class="price-main">716,000원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 357,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="실버크로스">실버크로스<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">니아</div></div>
+          <div class="price-col">
+            <div class="price-main">859,000원</div>
+            <div class="price-sale">세일 849,000원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 500,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="에그">에그<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">스카이</div></div>
+          <div class="price-col">
+            <div class="price-main">590,000원</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 231,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-coupang">쿠팡</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="와이업">와이업<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">지니에스3</div></div>
+          <div class="price-col">
+            <div class="price-main">498,000원</div>
+            <div class="price-sale">세일 473,100원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 139,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-naver">네이버</span></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="잉글레시나">잉글레시나<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">퀴드3</div></div>
+          <div class="price-col">
+            <div class="price-main">655,000원</div>
+            <div class="price-sale">세일 638,000원</div>
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-pricier">▲ 296,000</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"><span class="ch-tag ch-tag-default">CJ온스타일</span></div>
+        </div>
+        </div>
+        
+        <div class="issue-section">
+          <div class="issue-section-title">⚠️ 주요 이슈</div>
+          <div class="issue-line"><strong>부가부</strong> <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(버터플라이2)</span> 부가부 버터플라이2 품절</div>
+        </div>
+        
+      </div></div>
+    </div><div style="margin-bottom:32px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div style="width:4px;height:18px;background:#5B53F0;border-radius:2px"></div>
+        <span style="font-size:14px;font-weight:700;color:#1a1a2e">07월 3주차</span>
+        <span style="font-size:11px;color:#888;background:#f0f0f0;padding:2px 8px;border-radius:20px">07/16</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px">
+        <div class="sc"><div class="sc-icon purple">🏷️</div><div><div class="sc-val purple">10개</div><div class="sc-label">모니터링 브랜드</div></div></div>
+        <div class="sc"><div class="sc-icon green">📉</div><div><div class="sc-val green">0건</div><div class="sc-label">미마보다 저렴</div></div></div>
+        <div class="sc"><div class="sc-icon red">📈</div><div><div class="sc-val red">0건</div><div class="sc-label">미마보다 비쌈</div></div></div>
+        <div class="sc"><div class="sc-icon orange">⚠️</div><div><div class="sc-val orange">0건</div><div class="sc-label">이번 주 이슈</div></div></div>
+      </div>
+      <div class="cards-grid"><div class="item-card">
+        <div class="card-header">
+          <div class="card-item-name">휴대용 유모차 (오토폴딩)</div>
+          <div class="card-meta"><span class="brand-count">6개 브랜드</span></div>
+        </div>
+        <div style="padding:6px 0 2px">
+          <div style="display:flex;padding:4px 12px 6px;gap:8px">
+            <span style="font-size:10px;color:var(--text-muted);width:80px;flex-shrink:0">브랜드</span>
+            <span style="font-size:10px;color:var(--text-muted);flex:1">판매가/세일가</span>
+            <span style="font-size:10px;color:var(--text-muted);width:70px;text-align:center">미마 가격대비</span>
+            <span style="font-size:10px;color:var(--text-muted);width:70px;text-align:center">전주대비 증감</span>
+            <span style="font-size:10px;color:var(--text-muted);width:60px">최저가채널</span>
+          </div>
+          <div class="brand-row" style="background:rgba(91,83,240,.05);">
+          <div class="brand-name" title="미마">미마<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">미로</div></div>
+          <div class="price-col">
+            <div class="price-main">—</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="에그">에그<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Z PLUS</div></div>
+          <div class="price-col">
+            <div class="price-main">—</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span class="ch-down">▼854,890</span></div>
+          <div style="width:60px;flex-shrink:0"></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="오이스터">오이스터<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">미니 플러스</div></div>
+          <div class="price-col">
+            <div class="price-main">—</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span class="ch-down">▼670,000</span></div>
+          <div style="width:60px;flex-shrink:0"></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="오이스터">오이스터<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">미니2</div></div>
+          <div class="price-col">
+            <div class="price-main">—</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span class="ch-down">▼670,000</span></div>
+          <div style="width:60px;flex-shrink:0"></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="줄즈">줄즈<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">에어2</div></div>
+          <div class="price-col">
+            <div class="price-main">—</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span class="ch-down">▼788,000</span></div>
+          <div style="width:60px;flex-shrink:0"></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="피에고">피에고<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">S2</div></div>
+          <div class="price-col">
+            <div class="price-main">—</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span class="ch-down">▼294,000</span></div>
+          <div style="width:60px;flex-shrink:0"></div>
+        </div>
+        </div>
+        
+        
+      </div><div class="item-card">
+        <div class="card-header">
+          <div class="card-item-name">휴대용 유모차</div>
+          <div class="card-meta"><span class="brand-count">8개 브랜드</span></div>
+        </div>
+        <div style="padding:6px 0 2px">
+          <div style="display:flex;padding:4px 12px 6px;gap:8px">
+            <span style="font-size:10px;color:var(--text-muted);width:80px;flex-shrink:0">브랜드</span>
+            <span style="font-size:10px;color:var(--text-muted);flex:1">판매가/세일가</span>
+            <span style="font-size:10px;color:var(--text-muted);width:70px;text-align:center">미마 가격대비</span>
+            <span style="font-size:10px;color:var(--text-muted);width:70px;text-align:center">전주대비 증감</span>
+            <span style="font-size:10px;color:var(--text-muted);width:60px">최저가채널</span>
+          </div>
+          <div class="brand-row" style="">
+          <div class="brand-name" title="누비">누비<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">레노2</div></div>
+          <div class="price-col">
+            <div class="price-main">—</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span class="ch-down">▼438,000</span></div>
+          <div style="width:60px;flex-shrink:0"></div>
+        </div><div class="brand-row" style="background:rgba(91,83,240,.05);">
+          <div class="brand-name" title="미마">미마<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">밀리</div></div>
+          <div class="price-col">
+            <div class="price-main">—</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+          <div style="width:60px;flex-shrink:0"></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="부가부">부가부<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">버터플라이2</div></div>
+          <div class="price-col">
+            <div class="price-main">—</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span class="ch-down">▼902,500</span></div>
+          <div style="width:60px;flex-shrink:0"></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="스토케">스토케<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">요요3</div></div>
+          <div class="price-col">
+            <div class="price-main">—</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span class="ch-down">▼716,000</span></div>
+          <div style="width:60px;flex-shrink:0"></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="실버크로스">실버크로스<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">니아</div></div>
+          <div class="price-col">
+            <div class="price-main">—</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span class="ch-down">▼859,000</span></div>
+          <div style="width:60px;flex-shrink:0"></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="에그">에그<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">스카이</div></div>
+          <div class="price-col">
+            <div class="price-main">—</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span class="ch-down">▼590,000</span></div>
+          <div style="width:60px;flex-shrink:0"></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="와이업">와이업<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">지니에스3</div></div>
+          <div class="price-col">
+            <div class="price-main">—</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span class="ch-down">▼498,000</span></div>
+          <div style="width:60px;flex-shrink:0"></div>
+        </div><div class="brand-row" style="">
+          <div class="brand-name" title="잉글레시나">잉글레시나<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">퀴드3</div></div>
+          <div class="price-col">
+            <div class="price-main">—</div>
+            
+          </div>
+          <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+          <div class="change-col"><span class="ch-down">▼655,000</span></div>
+          <div style="width:60px;flex-shrink:0"></div>
+        </div>
+        </div>
+        
+        
       </div></div>
     </div></div>
 <!-- MAIN -->
@@ -582,11 +1127,11 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
       <div class="brand-row">
         <div class="brand-name" title="미마">미마<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">자리맥스</div></div>
         <div class="price-col">
-          <div class="price-main">990,000원</div>
-          <div class="price-sale">세일 935,750원</div>
+          <div class="price-main">750,000원</div>
+          <div class="price-sale">세일 745,000원</div>
         </div>
         <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
-        <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+        <div class="change-col"><span class="ch-down">▼240,000</span></div>
         <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
       </div>
     
@@ -594,9 +1139,9 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         <div class="brand-name" title="부가부">부가부<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">폭스 5</div></div>
         <div class="price-col">
           <div class="price-main">2,223,000원</div>
-          <div class="price-sale">세일 2,222,000원</div>
+          
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 1,233,000</span></div>
+        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 1,473,000</span></div>
         <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
         <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
       </div>
@@ -604,11 +1149,11 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
       <div class="brand-row">
         <div class="brand-name" title="스토케">스토케<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">익스플로리 엑스</div></div>
         <div class="price-col">
-          <div class="price-main">1,390,000원</div>
-          <div class="price-sale">세일 1,327,270원</div>
+          <div class="price-main">1,327,270원</div>
+          
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 400,000</span></div>
-        <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 577,270</span></div>
+        <div class="change-col"><span class="ch-down">▼62,730</span></div>
         <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-coupang" title="쿠팡">쿠팡</span></div>
       </div>
     
@@ -618,7 +1163,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
           <div class="price-main">1,810,000원</div>
           <div class="price-sale">세일 1,800,000원</div>
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 820,000</span></div>
+        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 1,060,000</span></div>
         <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
         <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
       </div>
@@ -627,9 +1172,9 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         <div class="brand-name" title="잉글레시나">잉글레시나<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">앱티카듀오</div></div>
         <div class="price-col">
           <div class="price-main">1,990,000원</div>
-          <div class="price-sale">세일 1,960,000원</div>
+          
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 1,000,000</span></div>
+        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 1,240,000</span></div>
         <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
         <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
       </div>
@@ -637,11 +1182,11 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
       <div class="brand-row">
         <div class="brand-name" title="줄즈">줄즈<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">데이5</div></div>
         <div class="price-col">
-          <div class="price-main">1,480,000원</div>
-          <div class="price-sale">세일 1,470,000원</div>
+          <div class="price-main">1,470,000원</div>
+          
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 490,000</span></div>
-        <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
+        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 720,000</span></div>
+        <div class="change-col"><span class="ch-down">▼10,000</span></div>
         <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
       </div>
     
@@ -651,7 +1196,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
           <div class="price-main">1,930,000원</div>
           <div class="price-sale">세일 1,906,890원</div>
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 940,000</span></div>
+        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 1,180,000</span></div>
         <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
         <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-coupang" title="쿠팡">쿠팡</span></div>
       </div>
@@ -662,6 +1207,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         <div class="issue-section-title">⚠️ 주요 이슈</div>
         <div class="issue-line"><strong>잉글레시나</strong> <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(앱티카듀오)</span> 잉글레시나 앱티카듀오 품절</div>
       </div>
+        
       </div>
       <div class="item-card">
         <div class="card-header">
@@ -684,7 +1230,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         <div class="brand-name" title="미마">미마<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">크레오</div></div>
         <div class="price-col">
           <div class="price-main">1,190,000원</div>
-          <div class="price-sale">세일 1,135,000원</div>
+          <div class="price-sale">세일 1,185,000원</div>
         </div>
         <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
         <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
@@ -695,7 +1241,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         <div class="brand-name" title="부가부">부가부<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">드래곤플라이 플러스</div></div>
         <div class="price-col">
           <div class="price-main">1,567,500원</div>
-          <div class="price-sale">세일 1,566,500원</div>
+          
         </div>
         <div class="vs-col"><span class="vs-badge vs-pricier">▲ 377,500</span></div>
         <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
@@ -739,7 +1285,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         <div class="brand-name" title="잉글레시나">잉글레시나<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">앱티카</div></div>
         <div class="price-col">
           <div class="price-main">1,298,000원</div>
-          <div class="price-sale">세일 1,268,000원</div>
+          
         </div>
         <div class="vs-col"><span class="vs-badge vs-pricier">▲ 108,000</span></div>
         <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
@@ -774,13 +1320,14 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         <div class="issue-section-title">⚠️ 주요 이슈</div>
         <div class="issue-line"><strong>포레스타</strong> <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(가디언)</span> 신규 브랜드</div>
       </div>
+        
       </div>
       <div class="item-card">
         <div class="card-header">
           <div class="card-item-name">휴대용 유모차</div>
           <div class="card-meta">
             <span class="brand-count">8개 브랜드</span>
-            <span class="issue-count">⚠️ 1</span>
+            <span class="issue-count">⚠️ 2</span>
           </div>
         </div>
         <div style="padding:6px 0 2px;">
@@ -795,103 +1342,104 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
       <div class="brand-row">
         <div class="brand-name" title="누비">누비<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">레노2</div></div>
         <div class="price-col">
-          <div class="price-main">438,000원</div>
-          <div class="price-sale">세일 415,150원</div>
+          <div class="price-main">—</div>
+          
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 59,000</span></div>
-        <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
-        <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
+        <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+        <div class="change-col"><span class="ch-down">▼438,000</span></div>
+        <div style="width:72px;flex-shrink:0;"></div>
       </div>
     
       <div class="brand-row">
         <div class="brand-name" title="미마">미마<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">밀리</div></div>
         <div class="price-col">
-          <div class="price-main">379,000원</div>
-          <div class="price-sale">세일 355,300원</div>
+          <div class="price-main">—</div>
+          
         </div>
         <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
         <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
-        <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
+        <div style="width:72px;flex-shrink:0;"></div>
       </div>
     
       <div class="brand-row">
         <div class="brand-name" title="부가부">부가부<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">버터플라이2</div></div>
         <div class="price-col">
-          <div class="price-main">902,500원</div>
-          <div class="price-sale">세일 901,500원</div>
+          <div class="price-main">—</div>
+          
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 523,500</span></div>
-        <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
-        <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
+        <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+        <div class="change-col"><span class="ch-down">▼902,500</span></div>
+        <div style="width:72px;flex-shrink:0;"></div>
       </div>
     
       <div class="brand-row">
         <div class="brand-name" title="스토케">스토케<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">요요3</div></div>
         <div class="price-col">
-          <div class="price-main">716,000원</div>
+          <div class="price-main">—</div>
           
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 337,000</span></div>
-        <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
-        <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
+        <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+        <div class="change-col"><span class="ch-down">▼716,000</span></div>
+        <div style="width:72px;flex-shrink:0;"></div>
       </div>
     
       <div class="brand-row">
         <div class="brand-name" title="실버크로스">실버크로스<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">니아</div></div>
         <div class="price-col">
-          <div class="price-main">859,000원</div>
-          <div class="price-sale">세일 849,000원</div>
+          <div class="price-main">—</div>
+          
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 480,000</span></div>
-        <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
-        <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
+        <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+        <div class="change-col"><span class="ch-down">▼859,000</span></div>
+        <div style="width:72px;flex-shrink:0;"></div>
       </div>
     
       <div class="brand-row">
         <div class="brand-name" title="에그">에그<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">스카이</div></div>
         <div class="price-col">
-          <div class="price-main">590,000원</div>
+          <div class="price-main">—</div>
           
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 211,000</span></div>
-        <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
-        <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-coupang" title="쿠팡">쿠팡</span></div>
+        <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+        <div class="change-col"><span class="ch-down">▼590,000</span></div>
+        <div style="width:72px;flex-shrink:0;"></div>
       </div>
     
       <div class="brand-row">
         <div class="brand-name" title="와이업">와이업<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">지니에스3</div></div>
         <div class="price-col">
-          <div class="price-main">498,000원</div>
-          <div class="price-sale">세일 454,100원</div>
+          <div class="price-main">—</div>
+          
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 119,000</span></div>
-        <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
-        <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
+        <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+        <div class="change-col"><span class="ch-down">▼498,000</span></div>
+        <div style="width:72px;flex-shrink:0;"></div>
       </div>
     
       <div class="brand-row">
         <div class="brand-name" title="잉글레시나">잉글레시나<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">퀴드3</div></div>
         <div class="price-col">
-          <div class="price-main">655,000원</div>
-          <div class="price-sale">세일 625,000원</div>
+          <div class="price-main">—</div>
+          
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 276,000</span></div>
-        <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
-        <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
+        <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+        <div class="change-col"><span class="ch-down">▼655,000</span></div>
+        <div style="width:72px;flex-shrink:0;"></div>
       </div>
     
         </div>
         
       <div class="issue-section">
         <div class="issue-section-title">⚠️ 주요 이슈</div>
-        <div class="issue-line"><strong>와이업</strong> <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(지니에스3)</span> 7/3(금) 오전 11시 네이버 LIVE</div>
+        <div class="issue-line"><strong>부가부</strong> <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(버터플라이2)</span> 부가부 버터플라이2 품절</div><div class="issue-line"><strong>와이업</strong> <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(지니에스3)</span> 7/3(금) 오전 11시 네이버 LIVE</div>
       </div>
+        
       </div>
       <div class="item-card">
         <div class="card-header">
           <div class="card-item-name">휴대용 유모차 (오토폴딩)</div>
           <div class="card-meta">
-            <span class="brand-count">4개 브랜드</span>
+            <span class="brand-count">5개 브랜드</span>
             <span class="issue-count">⚠️ 1</span>
           </div>
         </div>
@@ -907,45 +1455,56 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
       <div class="brand-row">
         <div class="brand-name" title="미마">미마<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">미로</div></div>
         <div class="price-col">
-          <div class="price-main">759,000원</div>
-          <div class="price-sale">세일 716,300원</div>
+          <div class="price-main">—</div>
+          
         </div>
         <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
         <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
-        <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
+        <div style="width:72px;flex-shrink:0;"></div>
       </div>
     
       <div class="brand-row">
         <div class="brand-name" title="에그">에그<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Z PLUS</div></div>
         <div class="price-col">
-          <div class="price-main">854,890원</div>
+          <div class="price-main">—</div>
           
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 95,890</span></div>
-        <div class="change-col"><span class="ch-down">▼35,110</span></div>
-        <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-coupang" title="쿠팡">쿠팡</span></div>
+        <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+        <div class="change-col"><span class="ch-down">▼854,890</span></div>
+        <div style="width:72px;flex-shrink:0;"></div>
       </div>
     
       <div class="brand-row">
         <div class="brand-name" title="오이스터">오이스터<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">미니 플러스</div></div>
         <div class="price-col">
-          <div class="price-main">670,000원</div>
+          <div class="price-main">—</div>
           
         </div>
-        <div class="vs-col"><span class="vs-badge vs-cheaper">▼ 89,000</span></div>
-        <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
-        <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
+        <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+        <div class="change-col"><span class="ch-down">▼670,000</span></div>
+        <div style="width:72px;flex-shrink:0;"></div>
       </div>
     
       <div class="brand-row">
         <div class="brand-name" title="줄즈">줄즈<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">에어2</div></div>
         <div class="price-col">
-          <div class="price-main">788,000원</div>
-          <div class="price-sale">세일 778,000원</div>
+          <div class="price-main">—</div>
+          
         </div>
-        <div class="vs-col"><span class="vs-badge vs-pricier">▲ 29,000</span></div>
-        <div class="change-col"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1px solid #e0e0e8;font-size:10px;color:#c8c8d8;">—</span></div>
-        <div style="width:72px;flex-shrink:0;"><span class="ch-tag ch-tag-naver" title="네이버">네이버</span></div>
+        <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+        <div class="change-col"><span class="ch-down">▼788,000</span></div>
+        <div style="width:72px;flex-shrink:0;"></div>
+      </div>
+    
+      <div class="brand-row">
+        <div class="brand-name" title="피에고">피에고<div style="font-size:10px;color:var(--text-dim);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">S2</div></div>
+        <div class="price-col">
+          <div class="price-main">—</div>
+          
+        </div>
+        <div class="vs-col"><span class="vs-badge vs-same">—</span></div>
+        <div class="change-col"><span class="ch-down">▼294,000</span></div>
+        <div style="width:72px;flex-shrink:0;"></div>
       </div>
     
         </div>
@@ -955,6 +1514,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
         <div class="issue-line"><strong>줄즈</strong> <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(에어2)</span> 줄즈 휴대용 유모차 루프트 런칭
 7/15(수) 네이버 LIVE</div>
       </div>
+        
       </div></div>
   </div>
 
@@ -977,6 +1537,8 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
           <th onclick="thSort(&#39;전주대비증감&#39;,this)">전주대비 증감</th>
           <th>최저가채널</th>
           <th>사은품</th>
+          <th onclick="thSort(&#39;네이버예상판매수량&#39;,this)">예상수량(7일)</th>
+          <th onclick="thSort(&#39;네이버예상판매매출&#39;,this)">예상매출(7일)</th>
           <th>이슈사항</th>
         </tr></thead>
         <tbody id="tbTable"><tr>
@@ -2429,7 +2991,7 @@ function parseGvizDate(raw){
 }
 const SHEET_ID='1pOzFmrTMrQLRSAxeKD032uNd8yGSVM992yt5PemQoEE';
 const SHEET_GID='1226837531';
-const GVIZ_URL='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?gid='+SHEET_GID+'&range=B5:L&tqx=out:json;responseHandler:__mimaCb';
+const GVIZ_URL='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?gid='+SHEET_GID+'&range=B5:N&tqx=out:json;responseHandler:__mimaCb';
 
 function loadData(){
   setStatus([{t:'🔄 데이터 불러오는 중...',c:'chip-info'}]);
@@ -2466,6 +3028,8 @@ function loadData(){
           '최저가 채널':String(val(8)).trim(),
           사은품:String(val(9)).trim(),
           이슈사항:String(val(10)).trim(),
+          '네이버 예상판매수량(7일)':val(11),
+          '네이버 예상판매매출(7일)':val(12),
         });
       });
       if(!rows.length)throw new Error('데이터 없음');
@@ -2481,6 +3045,8 @@ function loadData(){
         최저가채널:String(r['최저가 채널']||'').trim(),
         사은품:String(r.사은품||'').trim(),
         이슈사항:String(r.이슈사항||'').trim(),
+        네이버예상판매수량:pNum(r['네이버 예상판매수량(7일)']),
+        네이버예상판매매출:pNum(r['네이버 예상판매매출(7일)']),
       }));
       buildFilters();applyFilters();
       const latest=getLatest();
@@ -2642,6 +3208,18 @@ function renderCards(){
         ${issueRows.sort((a,b)=>(a.브랜드||'').localeCompare(b.브랜드||'')).map(r=>`<div class="issue-line"><strong>${r.브랜드}</strong>${r.제품명?` <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(${r.제품명})</span>`:''} ${r.이슈사항}</div>`).join('')}
       </div>`:''
 
+    const naverRows=brandRows.filter(r=>r.네이버예상판매수량!=null&&r.네이버예상판매수량>0);
+    const naverHtml=naverRows.length?`
+      <div style="padding:10px 16px;border-top:1px solid var(--border);">
+        <div style="font-size:10px;font-weight:700;color:#5B53F0;margin-bottom:6px;">📦 네이버 예상판매 (7일)</div>
+        ${naverRows.map(r=>`
+          <div style="display:flex;justify-content:space-between;align-items:baseline;padding:2px 0;">
+            <span style="font-size:11px;color:var(--text-dim);">${r.브랜드}${r.제품명?` <span style="color:var(--text-muted);">(${r.제품명})</span>`:''}</span>
+            <span style="font-size:11px;color:#333;">${r.네이버예상판매수량.toLocaleString()}건${r.네이버예상판매매출>0?` <span style="font-size:10px;color:#888;">/ ${(r.네이버예상판매매출/10000).toFixed(0)}만원</span>`:''}</span>
+          </div>
+        `).join('')}
+      </div>`:'';
+
     return `
       <div class="item-card">
         <div class="card-header">
@@ -2662,6 +3240,7 @@ function renderCards(){
           ${brandHtml}
         </div>
         ${issueHtml}
+        ${naverHtml}
       </div>`;
   }).join('');
 }
@@ -2693,9 +3272,11 @@ function renderTable(){
       <td>${changeC(r.전주대비증감)}</td>
       <td style="font-size:11px;color:var(--text-dim);">${r.최저가채널||'—'}</td>
       <td style="font-size:11px;color:var(--text-dim);">${r.사은품||'—'}</td>
+      <td class="mono" style="text-align:right;">${r.네이버예상판매수량!=null&&r.네이버예상판매수량!==''?r.네이버예상판매수량.toLocaleString()+'건':'—'}</td>
+      <td class="mono" style="text-align:right;">${r.네이버예상판매매출!=null&&r.네이버예상판매매출!==''?(r.네이버예상판매매출/10000).toFixed(0)+'만원':'—'}</td>
       <td style="max-width:200px;">${r.이슈사항?`<span style="font-size:11px;color:#b02050;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;cursor:default;" title="${r.이슈사항}">${r.이슈사항}</span>`:'<span style="color:var(--text-muted);font-size:11px;">—</span>'}</td>
     </tr>`).join('')
-    :`<tr><td colspan="11"><div class="empty"><div class="empty-icon">📭</div><div class="empty-title">검색 결과 없음</div></div></td></tr>`;
+    :`<tr><td colspan="13"><div class="empty"><div class="empty-icon">📭</div><div class="empty-title">검색 결과 없음</div></div></td></tr>`;
 }
 
 function thSort(col,el){
@@ -2886,6 +3467,17 @@ function renderWeeklyPanel(){
           <div class="issue-section-title">⚠️ 주요 이슈</div>
           ${uniqueIssues.map(r=>`<div class="issue-line"><strong>${r.브랜드}</strong>${r.제품명?` <span style="font-size:10px;color:var(--text-dim);font-weight:400;">(${r.제품명})</span>`:''} ${r.이슈사항}</div>`).join('')}
         </div>`:'';
+      const wpNaverRows=brandRows.filter(r=>r.네이버예상판매수량!=null&&r.네이버예상판매수량>0);
+      const wpNaverHtml=wpNaverRows.length?`
+        <div style="padding:10px 12px;border-top:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;color:#5B53F0;margin-bottom:5px;">📦 네이버 예상판매 (7일)</div>
+          ${wpNaverRows.map(r=>`
+            <div style="display:flex;justify-content:space-between;align-items:baseline;padding:2px 0;">
+              <span style="font-size:11px;color:var(--text-dim);">${r.브랜드}${r.제품명?` <span style="color:var(--text-muted);">(${r.제품명})</span>`:''}</span>
+              <span style="font-size:11px;color:#333;">${r.네이버예상판매수량.toLocaleString()}건${r.네이버예상판매매출>0?` <span style="font-size:10px;color:#888;">/ ${(r.네이버예상판매매출/10000).toFixed(0)}만원</span>`:''}</span>
+            </div>
+          `).join('')}
+        </div>`:'';
       return`<div class="item-card">
         <div class="card-header">
           <div class="card-item-name">${cat}</div>
@@ -2902,6 +3494,7 @@ function renderWeeklyPanel(){
           ${brandHtml}
         </div>
         ${issueHtml}
+        ${wpNaverHtml}
       </div>`;
     }).filter(Boolean).join('');
     if(!cardsHtml) return '';
